@@ -7,7 +7,6 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 public class Main {
-    //CHECKSTYLE:OFF
     private static final int MEASURE_COUNT = 1;
 
     public static void main(String... args) {
