@@ -1,5 +1,5 @@
 package ru.otus.l011;
-//CHECKSTYLE:OFF
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -23,11 +23,11 @@ public class Main {
 
     private static void calcTime(Runnable runnable) {
         long startTime = System.nanoTime();
-        for (int i = 0; i < MEASURE_COUNT; i++)
+        for (int i = 0; i < MEASURE_COUNT; i++) {
             runnable.run();
+        }
         long finishTime = System.nanoTime();
         long timeNs = (finishTime - startTime) / MEASURE_COUNT;
         System.out.println("Time spent: " + timeNs + "ns (" + timeNs / 1_000_000 + "ms)");
     }
-    //CHECKSTYLE:ON
 }
