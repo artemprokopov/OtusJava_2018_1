@@ -1,26 +1,18 @@
 package ru.otus.l021;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import jdk.nashorn.internal.ir.debug.ObjectSizeCalculator;
+
 import java.util.Objects;
 
-public class Main<T> {
-    public static void main(String[] args) throws  IOException {
-        new Main<Integer[]>().watchSizeMemoryObject(new Integer[0]);
+public class Main {
+    public static void main(String[] args)  {
+        new Main().watchSizeMemoryObject(new String(""));
     }
 
-    private void watchSizeMemoryObject(T object) throws IOException {
+    private void watchSizeMemoryObject(Object object)  {
         if (Objects.isNull(object)) {
             return;
         }
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
-            oos.writeObject(object);
-        }
-        System.out.println(baos.size());
-
+        System.out.println(ObjectSizeCalculator.getObjectSize(object));
     }
-
 }
