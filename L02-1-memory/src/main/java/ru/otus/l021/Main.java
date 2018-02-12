@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Main {
     public static void main(String[] args)  {
-        new Main().watchSizeMemoryObject(new String(""));
+        new Main().watchSizeMemoryObject(new Object());
     }
 
     private void watchSizeMemoryObject(Object object)  {
