@@ -3,6 +3,7 @@ package ru.otus.l021;
 import jdk.nashorn.internal.ir.debug.ObjectSizeCalculator;
 
 import java.lang.management.ManagementFactory;
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Objects;
 
@@ -26,7 +27,13 @@ public class Main {
         System.out.println("Size object of " + String.class
                 + " equals to " + sizeObjectRuntime + " byte" + " with use Runtime");
         System.out.println("Size object of " + String.class
-                + " equals to " + sizeObjectSizeCalculator + " byte" + " with use Runtime");
+                + " equals to " + sizeObjectSizeCalculator + " byte" + " with use ObjectSizeCalculator");
+        sizeObjectRuntime = main.watchSizeMemoryObjectWithRuntime(new Object[0]);
+        sizeObjectSizeCalculator = main.watchSizeMemoryObject(new Object[0]);
+        System.out.println("Size object of " + Object[].class
+                + " equals to " + sizeObjectRuntime + " byte" + " with use Runtime");
+        System.out.println("Size object of " + Object[].class
+                + " equals to " + sizeObjectSizeCalculator + " byte" + " with use ObjectSizeCalculator");
     }
 
     public long watchSizeMemoryObject(Object object)  {
@@ -67,7 +74,7 @@ public class Main {
                 return new String(EMTY_CHAR_ARRAY);
             }
             if (neededTypeOfObject instanceof Object[]) {
-                return ((Object[]) neededTypeOfObject).clone();
+                return Array.newInstance(((Object[]) neededTypeOfObject).getClass(), ((Object[]) neededTypeOfObject).length);
             }
             return new Object();
         }
