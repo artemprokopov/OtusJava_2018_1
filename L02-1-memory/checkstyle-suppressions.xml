@@ -8,17 +8,17 @@
     <suppress
         checks="JavadocMethod"
         files="Main.java"
-        lines="0-34"/>
+        lines="0-200"/>
     <suppress
             checks="JavadocType"
             files="Main.java"
-            lines="0-34"/>
+            lines="0-200"/>
     <suppress
             checks="JavadocVariable"
             files="Main.java"
-            lines="0-34"/>
+            lines="0-200"/>
     <suppress
             checks="JavadocStyle"
             files="Main.java"
-            lines="0-34"/>
+            lines="0-200"/>
 </suppressions>
