@@ -1,13 +1,14 @@
 package ru.otus.l021;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
 public class SimpleHashMap<K, V> implements Map<K, V> {
-    private static final int INIT_CAPASITY = 16;
-    private int storeCapasity = INIT_CAPASITY;
-    private static final int MAX_STORE_CAPASITY = Integer.MAX_VALUE - 1;
+    private static final int INIT_CAPACITY = 16;
+    private int storeCapacity = 0;
+    private static final int MAX_STORE_CAPACITY = Integer.MAX_VALUE - 1;
     private double scaleFactor = 0.75;
     private int size = 0;
 
@@ -80,9 +81,68 @@ public class SimpleHashMap<K, V> implements Map<K, V> {
         V value;
         Node<K, V> next;
 
-        Node(K initKey, V initValue, Node<K, V> initNext) {
-
+        Node(K initKey, V initValue) {
+            this.key = initKey;
+            this.value = initValue;
         }
+    }
+
+    private void increaseStore() {
+        if (MAX_STORE_CAPACITY - this.storeCapacity > INIT_CAPACITY) {
+            this.storeCapacity += INIT_CAPACITY;
+            this.store = Arrays.copyOf(this.store, this.storeCapacity);
+        } else if(this.storeCapacity != MAX_STORE_CAPACITY) {
+            this.storeCapacity = MAX_STORE_CAPACITY;
+            this.store = Arrays.copyOf(this.store, this.storeCapacity);
+        }
+        distributionNode();
+    }
+
+    private void reduceStore() {
+        if (this.storeCapacity > INIT_CAPACITY) {
+            this.storeCapacity -= INIT_CAPACITY;
+        }
+        distributionNode();
+        this.store = Arrays.copyOf(this.store, this.storeCapacity);
+    }
+
+    private void distributionNode() {
+        Node<K, V> tempNode = null;
+        for (Node<K, V> kvNode : store) {
+            tempNode = kvNode;
+            while (tempNode != null) {
+                addNodeToStore(tempNode);
+                tempNode = tempNode.next;
+            }
+        }
+    }
+
+    private void addNodeToStore(Node<K, V> n) {
+        if (this.storeCapacity == 0) {
+            this.store = (Node<K, V>[]) new Node[INIT_CAPACITY];
+            this.storeCapacity = INIT_CAPACITY;
+        }
+        if (((double) this.size / this.storeCapacity) > this.scaleFactor) {
+            increaseStore();
+        }
+        if (((double) this.size / this.storeCapacity) > this.scaleFactor
+                && this.storeCapacity > INIT_CAPACITY) {
+            reduceStore();
+        }
+        int location = n.key.hashCode() % this.storeCapacity;
+        if (this.store[location] == null) {
+            this.store[location] = n;
+        } else {
+            addNodeLocation(this.store[location]).next = n;
+        }
+
+    }
+
+    private Node<K,V> addNodeLocation(Node<K, V> n) {
+        if (n.next == null) {
+            return n;
+        }
+        return addNodeLocation(n.next);
     }
 
 }
