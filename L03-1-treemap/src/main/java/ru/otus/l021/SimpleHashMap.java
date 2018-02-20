@@ -125,8 +125,8 @@ public class SimpleHashMap<K, V> implements Map<K, V> {
         if (((double) this.size / this.storeCapacity) > this.scaleFactor) {
             increaseStore();
         }
-        if (((double) this.size / this.storeCapacity) > this.scaleFactor
-                && this.storeCapacity > INIT_CAPACITY) {
+        if (this.storeCapacity > INIT_CAPACITY
+                && ((double) this.size / this.storeCapacity) < 1 - this.scaleFactor) {
             reduceStore();
         }
         int location = n.key.hashCode() % this.storeCapacity;
