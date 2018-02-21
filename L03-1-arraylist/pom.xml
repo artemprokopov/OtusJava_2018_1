@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>L03-1-hashmap</artifactId>
+    <artifactId>L03-1-arraylist</artifactId>
     <developers>
         <developer>
             <name>aprokopov</name>
