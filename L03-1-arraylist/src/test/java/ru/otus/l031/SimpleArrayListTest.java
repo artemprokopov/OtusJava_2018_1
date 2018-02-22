@@ -3,6 +3,7 @@ package ru.otus.l031;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Spliterator;
@@ -10,7 +11,6 @@ import java.util.Spliterator;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Ignore;
@@ -21,7 +21,7 @@ import org.junit.Test;
 /**
  * Тестовый класс для {@link SimpleArrayList}.
  * @author Artem Prokopov
- * @since 21/11/2017
+ * @since 19/02/2018
  * @version 1.0
  */
 
@@ -34,9 +34,12 @@ public class SimpleArrayListTest {
      * Массив результат для тесто метода  {@link SimpleArrayList#add(int, Object)}.
      */
     private static Integer[] resultArray1 = {1, 2, 6, 3, 4, 5};
-
     /**
-     * Массив результат для тесто метода  {@link SimpleArrayList#update(int, Object)}.
+     * Массив результат для тесто методов {@link Collections}.
+     */
+    private static Integer[] resultArray2 = {1, 2, 3, 4, 5, 1, 2, 3};
+    /**
+     * Массив результат для тесто метода  {@link SimpleArrayList#set(int, Object)}.
      */
     private static Integer[] resultArrayForUpdate = {1, 2, 6, 4, 5};
 
@@ -100,12 +103,12 @@ public class SimpleArrayListTest {
     }
 
     /**
-     * Тест метода {@link SimpleArrayList#update(int, Object)}.
+     * Тест метода {@link SimpleArrayList#set(int, Object)}.
      */
     @Test
     public void update() {
         SimpleArrayList<Integer> testSimpleArrayListForUpdate = new SimpleArrayList<>(testArray);
-        testSimpleArrayListForUpdate.update(2, 6);
+        testSimpleArrayListForUpdate.set(2, 6);
         assertArrayEquals(testSimpleArrayListForUpdate.toArray(new Integer[testSimpleArrayListForUpdate.size()]),
                 resultArrayForUpdate);
     }
@@ -128,8 +131,8 @@ public class SimpleArrayListTest {
     @Test
     public void remove1() {
         SimpleArrayList<Integer> testSimpleArrayListForremove = new SimpleArrayList<>(testArray);
-        Object result = testSimpleArrayListForremove.remove(new Integer(6));
-        assertNull(result);
+        boolean result = testSimpleArrayListForremove.remove(new Integer(6));
+        assertFalse(result);
         assertArrayEquals(testSimpleArrayListForremove.toArray(new Integer[testSimpleArrayListForremove.size()]),
                 testArray);
     }
@@ -360,5 +363,29 @@ public class SimpleArrayListTest {
         System.setOut(null);
         String result = "12345";
         assertEquals(result, byteArrayOutputStream.toString());
+    }
+
+    /**
+     * Тестируем на новой коллекции методы класса хелпера {@link Collections}.
+     */
+    @Test
+    public void collections1() {
+        SimpleArrayList<Integer> simpleArrayList =  new SimpleArrayList<>(testArray);
+        Collections.addAll(simpleArrayList, 1, 2, 3);
+        assertArrayEquals(simpleArrayList.toArray(new Integer[simpleArrayList.size()]), resultArray2);
+        int i = Collections.max(simpleArrayList);
+        assertEquals(i, 5);
+        i = Collections.min(simpleArrayList);
+        assertEquals(i, 1);
+        Collections.fill(simpleArrayList, 8);
+        assertArrayEquals(simpleArrayList.toArray(new Integer[simpleArrayList.size()]), new Integer[]{8, 8, 8, 8, 8, 8, 8, 8});
+        simpleArrayList =  new SimpleArrayList<>(testArray);
+        Collections.reverse(simpleArrayList);
+        assertArrayEquals(simpleArrayList.toArray(new Integer[simpleArrayList.size()]), new Integer[]{5, 4, 3, 2, 1});
+        simpleArrayList =  new SimpleArrayList<>(testArray);
+        Collections.rotate(simpleArrayList, 1);
+        assertArrayEquals(simpleArrayList.toArray(new Integer[simpleArrayList.size()]), new Integer[]{5, 1, 2, 3, 4});
+        Collections.swap(simpleArrayList, 1, 3);
+        assertArrayEquals(simpleArrayList.toArray(new Integer[simpleArrayList.size()]), new Integer[]{5, 3, 2, 1, 4});
     }
 }

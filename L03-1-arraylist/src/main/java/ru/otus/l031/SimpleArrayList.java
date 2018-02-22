@@ -1,21 +1,20 @@
 package ru.otus.l031;
+import java.util.AbstractList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 
 /**
- * Класс контейнера основанного на массиве, реализует интерфейс {@link List} и {@link Iterable}.
+ * Класс контейнера основанного на массиве, реализует интерфейс {@link List}.
  * @param <E> тип контейнера.
  * @author Artem Prokopov
- * @since 21/11/2017
+ * @since 19/02/2018
  * @version 1.0
  */
 
-public class SimpleArrayList<E> implements List<E> {
+public class SimpleArrayList<E> extends AbstractList<E> implements List<E> {
     /**
      * Смещение максимального размера массива относительно {@link Integer#MAX_VALUE}.
      */
@@ -75,32 +74,6 @@ public class SimpleArrayList<E> implements List<E> {
         this.array[++currentItem] = addItem;
         return true;
     }
-
-    @Override
-    public boolean containsAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(Collection<? extends E> c) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(int index, Collection<? extends E> c) {
-        return false;
-    }
-
-    @Override
-    public boolean removeAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean retainAll(Collection<?> c) {
-        return false;
-    }
-
     /**
      * Очищаем контейнер, вместо текущего создает новый пустой.
      */
@@ -124,44 +97,19 @@ public class SimpleArrayList<E> implements List<E> {
         this.currentItem++;
         array[indexAddItem] = addItem;
     }
-
-
-
-    @Override
-    public int indexOf(Object o) {
-        return 0;
-    }
-
-    @Override
-    public int lastIndexOf(Object o) {
-        return 0;
-    }
-
-    @Override
-    public ListIterator<E> listIterator() {
-        return null;
-    }
-
-    @Override
-    public ListIterator<E> listIterator(int index) {
-        return null;
-    }
-
-    @Override
-    public List<E> subList(int fromIndex, int toIndex) {
-        return null;
-    }
-
     /**
      * Заменяет элемент в контейнере.
      * @param indexUpdateItem индекс заменяемого элемента.
      * @param itemUpdate обновляемый элемент.
      * @return если операция добавления завершилась успешно возвращает true.
      */
-    public boolean update(int indexUpdateItem, E itemUpdate) {
+    @SuppressWarnings("unchecked")
+    @Override
+    public E set(int indexUpdateItem, E itemUpdate) {
         checkIndex(indexUpdateItem);
+        E oldValue = (E) this.array[indexUpdateItem];
         this.array[indexUpdateItem] = itemUpdate;
-        return true;
+        return oldValue;
     }
 
     /**
@@ -187,12 +135,14 @@ public class SimpleArrayList<E> implements List<E> {
     @SuppressWarnings("unchecked")
     @Override
     public boolean remove(Object deleteItem) {
+        boolean result = false;
         int indexDeleteItem = findItem(deleteItem);
         if (indexDeleteItem >= 0) {
             copyTailArrayWhenDeleteItem(indexDeleteItem);
             this.currentItem--;
+            result = true;
         }
-        return true;
+        return result;
     }
 
     /**
@@ -201,14 +151,10 @@ public class SimpleArrayList<E> implements List<E> {
      * @return элемент контейнера.
      */
     @SuppressWarnings("unchecked")
+    @Override
     public E get(int indexItem) {
         checkIndex(indexItem);
         return (E) array[indexItem];
-    }
-
-    @Override
-    public E set(int index, E element) {
-        return null;
     }
 
     /**
@@ -220,10 +166,6 @@ public class SimpleArrayList<E> implements List<E> {
         return this.currentItem < 0;
     }
 
-    @Override
-    public boolean contains(Object o) {
-        return findItem(o) != -1;
-    }
 
     /**
      * Уменьшает размер массива {@link SimpleArrayList#array}
@@ -395,9 +337,5 @@ public class SimpleArrayList<E> implements List<E> {
         };
     }
 
-    @Override
-    public Object[] toArray() {
-        return new Object[0];
-    }
 }
 

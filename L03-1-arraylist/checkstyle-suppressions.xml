@@ -5,20 +5,5 @@
         "http://checkstyle.sourceforge.net/dtds/suppressions_1_1.dtd">
 
 <suppressions>
-    <suppress
-            checks="JavadocMethod"
-            files="SimpleHashMap.java"
-            lines="91-104"/>
-    <suppress
-            checks="JavadocType"
-            files="SimpleHashMap.java"
-            lines="91-104"/>
-    <suppress
-            checks="JavadocVariable"
-            files="SimpleHashMap.java"
-            lines="91-104"/>
-    <suppress
-            checks="JavadocStyle"
-            files="SimpleHashMap.java"
-            lines="91-104"/>
+
 </suppressions>
