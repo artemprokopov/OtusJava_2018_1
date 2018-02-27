@@ -6,7 +6,7 @@ import java.lang.management.ManagementFactory;
 import java.lang.reflect.Array;
 import java.util.Objects;
 /**
- * VM options -Xmx1024m -Xms1024m
+ * VM options -Xmx1024m -Xms1024m.
  * jconsole, connect to pid
  */
 public class Main {
@@ -119,7 +119,7 @@ public class Main {
 
     /**
      * Запускаем сборщик мусора.
-     * @throws InterruptedException
+     * @throws InterruptedException.
      */
     private static void runGC() throws InterruptedException {
         System.gc();

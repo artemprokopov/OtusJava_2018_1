@@ -123,7 +123,6 @@ public class SimpleArrayList<E> extends AbstractList<E> implements List<E> {
         checkIndex(indexDeleteItem);
         E oldValue = (E) array[indexDeleteItem];
         copyTailArrayWhenDeleteItem(indexDeleteItem);
-        this.currentItem--;
         return oldValue;
     }
 
@@ -139,7 +138,6 @@ public class SimpleArrayList<E> extends AbstractList<E> implements List<E> {
         int indexDeleteItem = findItem(deleteItem);
         if (indexDeleteItem >= 0) {
             copyTailArrayWhenDeleteItem(indexDeleteItem);
-            this.currentItem--;
             result = true;
         }
         return result;
@@ -261,6 +259,7 @@ public class SimpleArrayList<E> extends AbstractList<E> implements List<E> {
     private void copyTailArrayWhenDeleteItem(int indexDeleteItem) {
         System.arraycopy(array, indexDeleteItem + 1,
                 array, indexDeleteItem, currentItem - indexDeleteItem);
+        this.array[currentItem--] = null;
     }
 
     /**
