@@ -94,7 +94,6 @@ public class SimpleArrayList<E> extends AbstractList<E> implements List<E> {
         checkIndex(indexAddItem);
         checkAddSizeArray();
         copyTailArrayWhenAddItem(indexAddItem);
-        this.currentItem++;
         array[indexAddItem] = addItem;
     }
     /**
@@ -269,6 +268,7 @@ public class SimpleArrayList<E> extends AbstractList<E> implements List<E> {
     private void copyTailArrayWhenAddItem(int indexAddItem) {
         System.arraycopy(array, indexAddItem,
                 array, indexAddItem + 1, currentItem + 1 - indexAddItem + 1);
+        this.currentItem++;
     }
 
     /**
