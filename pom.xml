@@ -12,6 +12,7 @@
         <module>L01-1-maven</module>
         <module>L02-1-memory</module>
         <module>L03-1-arraylist</module>
+        <module>L04-1-gc</module>
     </modules>
     <name>OtusJava_2018_1</name>
     <description>The Course Java Developer of the Otus.</description>
