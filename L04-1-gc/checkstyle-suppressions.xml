@@ -5,5 +5,20 @@
         "http://checkstyle.sourceforge.net/dtds/suppressions_1_1.dtd">
 
 <suppressions>
-
+    <suppress
+            checks="JavadocMethod"
+            files="TestGc.java"
+            lines="68-92"/>
+    <suppress
+            checks="JavadocType"
+            files="TestGc.java"
+            lines="68-92"/>
+    <suppress
+            checks="JavadocVariable"
+            files="TestGc.java"
+            lines="68-92"/>
+    <suppress
+            checks="JavadocStyle"
+            files="TestGc.java"
+            lines="68-92"/>
 </suppressions>
