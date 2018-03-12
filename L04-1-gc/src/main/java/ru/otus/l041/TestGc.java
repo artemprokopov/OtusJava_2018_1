@@ -10,7 +10,6 @@ import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 /**
  * Класс тестирование различных GC.
  * Параметры запуска -Xms196m -Xmx196m если памяти меньше, то GC ConcMarkSweepGC падает
@@ -30,7 +29,7 @@ public class TestGc {
     /**
      * Хранилище количества сборок GC того или иного типа.
      */
-    private static HashMap<String, Integer> resultGC = new HashMap<>();
+    private static HashMap<String, Integer[]> resultGC = new HashMap<>();
 
     /**
      * Вход в приложение с подтиканием по памяти.
@@ -41,9 +40,7 @@ public class TestGc {
         for (GarbageCollectorMXBean mBean: gcMxBeans) {
             ((NotificationEmitter) mBean).addNotificationListener(gcHandler, null, null);
         }
-        System.out.println(gcMxBeans.get(0).getObjectName());
         List<String> integerList = new ArrayList<>();
-        Random random = new Random(Integer.MAX_VALUE);
         int i = 0;
         while (true) {
             integerList.add(new String(new char[0]));
@@ -63,30 +60,35 @@ public class TestGc {
     /**
      * Создаем слушателя уведомлений.
      * Выводит в консоль режимы работы GC, время сборки и количество сборок того или иного типа,
-     * прошедших с начала работы приложения.
+     * прошедших с начала работы приложения, а так же время затраченное на сборку того или иного типа с начала работы
+     * приложения в секундах.
      */
     private static NotificationListener gcHandler = (notification, handback) -> {
         if (notification.getType().equals(GarbageCollectionNotificationInfo.GARBAGE_COLLECTION_NOTIFICATION)) {
             GarbageCollectionNotificationInfo gcInfo = GarbageCollectionNotificationInfo.from((CompositeData) notification.getUserData());
             String gcName = gcInfo.getGcName();
+            int gcTime = (int) gcInfo.getGcInfo().getDuration();
             if (resultGC.containsKey(gcName)) {
-                int i = resultGC.get(gcName);
+                int i = resultGC.get(gcName)[0];
                 i++;
-                resultGC.put(gcName, i);
+                int j = resultGC.get(gcName)[1];
+                j += gcTime;
+                resultGC.put(gcName, new Integer[]{i, j});
             } else {
-                resultGC.put(gcName, 1);
+                resultGC.put(gcName, new Integer[]{1, gcTime});
             }
             StringBuilder sb = new StringBuilder().append("->>> ")
                     .append(gcName)
                     .append(" >>> ")
                     .append(gcInfo.getGcAction())
                     .append(" >>> ")
-                    .append(gcInfo.getGcInfo().getDuration()).append(" ms ");
+                    .append(gcTime).append(" ms ");
             System.out.println(sb.toString());
         }
         for (String s: resultGC.keySet()) {
-            System.out.print(s + " ");
-            System.out.println(resultGC.get(s));
+            System.out.print("Type GC " + s + "; ");
+            System.out.println("number of garbage collections: " + resultGC.get(s)[0]
+                    + "; garbage collection time: " + (double) resultGC.get(s)[1] / 1000 + "s;");
         }
     };
 }
