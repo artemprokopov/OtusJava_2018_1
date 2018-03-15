@@ -22,9 +22,19 @@ class ReflectionHelper {
         throw new UnsupportedOperationException();
     }
 
+    static Class<?> getClass(String nameClass) {
+        Class<?> tClass = null;
+        try {
+            tClass = Class.forName(nameClass);
+        } catch (ClassNotFoundException e) {
+            System.out.println("Class for test not found!");
+        }
+        return tClass;
+    }
+
     static <T> T instantiate(Class<T> type, Object... args) {
         try {
-            if (args.length == 0) {
+            if (args == null || args.length == 0) {
                 return type.getDeclaredConstructor().newInstance();
             } else {
                 Class<?>[] classes = toClasses(args);
@@ -82,8 +92,8 @@ class ReflectionHelper {
         return Arrays.asList(methods);
     }
     
-    static HashMap<Class,List<Method>> getAnotatedMethod(List<Method> methods, Class... annotationClass) {
-        HashMap<Class,List<Method>> annotationMethods = new HashMap<>();
+    static HashMap<Class<?>,List<Method>> getAnotatedMethod(List<Method> methods, Class<?>... annotationClass) {
+        HashMap<Class<?>, List<Method>> annotationMethods = new HashMap<>();
         for (Method method : methods) {
             for (Class aClass : annotationClass) {
                 if (method.isAnnotationPresent(aClass)) {
@@ -122,9 +132,9 @@ class ReflectionHelper {
         return Arrays.stream(args).map(Object::getClass).toArray(Class<?>[]::new);
     }
 
-    static Class<?>[] findClasses(String packageName) throws ClassNotFoundException {
+    static List<Class<?>> findClasses(String packageName) throws ClassNotFoundException {
 
-        List<Class> classes = new ArrayList<Class>();
+        List<Class<?>> classes = new ArrayList<>();
         URL root = Thread.currentThread().getContextClassLoader().getResource(packageName.replace(".", "/"));
 
         File[] files = new File(root.getFile()).listFiles((dir, name) -> name.endsWith(".class"));
@@ -133,7 +143,7 @@ class ReflectionHelper {
             String className = file.getName().replaceAll(".class$", "");
                 classes.add(Class.forName(packageName + "." + className));
         }
-        return classes.toArray(new Class[classes.size()]);
+        return classes;
     }
 
 }
