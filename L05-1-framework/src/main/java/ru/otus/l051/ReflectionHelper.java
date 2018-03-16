@@ -1,4 +1,4 @@
-package ru.orus.l051;
+package ru.otus.l051;
 
 
 
@@ -14,14 +14,25 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by tully.
+ * Класс утилитный, для реализации методов рефлексии.
+ * @author Chibrikov Vitaly, Artem Prokopov
+ * @since 15/03/2018
+ * @version 1.0
  */
 @SuppressWarnings("SameParameterValue")
 class ReflectionHelper {
+    /**
+     *Приватный конструктор с выбросом исключения, для того чтобы не дать создать экземпляр класса.
+     */
     private ReflectionHelper() {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Полкчение класса по его имени.
+     * @param nameClass имя класса.
+     * @return либо объект типа Class или если класса не сузествует возвращает null/
+     */
     static Class<?> getClass(String nameClass) {
         Class<?> tClass = null;
         try {
@@ -32,6 +43,13 @@ class ReflectionHelper {
         return tClass;
     }
 
+    /**
+     * Создание объекта указанного класса.
+     * @param type тип создаваемого объекта.
+     * @param args аргументы конструктора.
+     * @param <T> тип
+     * @return объект в случае успеха, иначе null.
+     */
     static <T> T instantiate(Class<T> type, Object... args) {
         try {
             if (args == null || args.length == 0) {
@@ -47,6 +65,12 @@ class ReflectionHelper {
         return null;
     }
 
+    /**
+     * Получени  поля объекта по его  имени.
+     * @param object объект поле которого мы хотим получить.
+     * @param name имя поля.
+     * @return поле объекта в случае успеха, если поле не существует возвращается null.
+     */
     static Object getFieldValue(Object object, String name) {
         Field field = null;
         boolean isAccessible = true;
@@ -65,6 +89,12 @@ class ReflectionHelper {
         return null;
     }
 
+    /**
+     * Присваивание значения полю объекта.
+     * @param object объект полю которого присваивается значение.
+     * @param name имя  поля.
+     * @param value значение поля.
+     */
     static void setFieldValue(Object object, String name, Object value) {
         Field field = null;
         boolean isAccessible = true;
@@ -82,6 +112,11 @@ class ReflectionHelper {
         }
     }
 
+    /**
+     * Получение всех методов объекта.
+     * @param object объект методы которого хоти получить.
+     * @return List методов.
+     */
     static List<Method> getMethod(Object object) {
         Method[] methods = null;
         try {
@@ -91,8 +126,14 @@ class ReflectionHelper {
         }
         return Arrays.asList(methods);
     }
-    
-    static HashMap<Class<?>,List<Method>> getAnotatedMethod(List<Method> methods, Class<?>... annotationClass) {
+
+    /**
+     * Получени всех аннотированных меодов.
+     * @param methods List методов объекта.
+     * @param annotationClass перечень аннотаций для поиска.
+     * @return HashMap c ключем по типу аннотации, значение List методов аннотированных данной аннотацией.
+     */
+    static HashMap<Class<?>, List<Method>> getAnotatedMethod(List<Method> methods, Class<?>... annotationClass) {
         HashMap<Class<?>, List<Method>> annotationMethods = new HashMap<>();
         for (Method method : methods) {
             for (Class aClass : annotationClass) {
@@ -109,7 +150,13 @@ class ReflectionHelper {
         return annotationMethods;
     }
 
-
+    /**
+     * Вызов метода объекта по его имени.
+     * @param object объект у которого вызывается метод.
+     * @param name имя метода.
+     * @param args аргументы передаваемые в метод.
+     * @return результат вызова метода.
+     */
     static Object callMethod(Object object, String name, Object... args) {
         Method method = null;
         boolean isAccessible = true;
@@ -128,11 +175,21 @@ class ReflectionHelper {
         return null;
     }
 
-    static private Class<?>[] toClasses(Object[] args) {
-        return Arrays.stream(args).map(Object::getClass).toArray(Class<?>[]::new);
+    /**
+     * Получение массива классов по перечьню объектов.
+     * @param args перечень объектов.
+     * @return Массив классов.
+     */
+    private static Class[] toClasses(Object[] args) {
+        return Arrays.stream(args).map(Object::getClass).toArray(Class[]::new);
     }
 
-    static List<Class<?>> findClasses(String packageName) throws ClassNotFoundException {
+    /**
+     * Плучение всех классов зодержащихся в пакете по его имени.
+     * @param packageName имя пакета.
+     * @return List содержащий все классы пакета.
+     */
+    static List<Class<?>> getClasses(String packageName)  {
 
         List<Class<?>> classes = new ArrayList<>();
         URL root = Thread.currentThread().getContextClassLoader().getResource(packageName.replace(".", "/"));
@@ -141,7 +198,11 @@ class ReflectionHelper {
 
         for (File file : files) {
             String className = file.getName().replaceAll(".class$", "");
+            try {
                 classes.add(Class.forName(packageName + "." + className));
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
         return classes;
     }
