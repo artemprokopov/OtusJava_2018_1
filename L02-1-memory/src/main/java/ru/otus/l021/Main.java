@@ -1,7 +1,7 @@
 package ru.otus.l021;
 
 
-import jdk.nashorn.internal.ir.debug.ObjectSizeCalculator;
+//import jdk.nashorn.internal.ir.debug.ObjectSizeCalculator;
 
 import java.lang.management.ManagementFactory;
 import java.lang.reflect.Array;
@@ -33,36 +33,36 @@ public class Main {
             throw new IllegalArgumentException("The argument could not be processed!");
         }
         long sizeObjectRuntime = 0;
-        long sizeObjectSizeCalculator = 0;
+//        long sizeObjectSizeCalculator = 0;
         try {
             sizeObjectRuntime = watchSizeMemoryObjectWithRuntime(object);
-            sizeObjectSizeCalculator = watchSizeMemoryObject(object);
+//            sizeObjectSizeCalculator = watchSizeMemoryObject(object);
         } catch (InterruptedException ie) {
             Thread.currentThread().interrupt();
         }
         System.out.println("Size object of " + object.getClass()
                 + " equals to " + sizeObjectRuntime + " byte with use Runtime");
-        System.out.println("Size object of " + object.getClass()
-                + " equals to " + sizeObjectSizeCalculator + " byte with use ObjectSizeCalculator");
-        if (sizeObjectRuntime != sizeObjectSizeCalculator) {
-            System.out.println("The result obtained using Runtime and ObjectSize are NOT equal");
-        } else {
-            System.out.println("The result obtained using Runtime and ObjectSize are equal");
-        }
+//        System.out.println("Size object of " + object.getClass()
+//                + " equals to " + sizeObjectSizeCalculator + " byte with use ObjectSizeCalculator");
+//        if (sizeObjectRuntime != sizeObjectSizeCalculator) {
+//            System.out.println("The result obtained using Runtime and ObjectSize are NOT equal");
+//        } else {
+//            System.out.println("The result obtained using Runtime and ObjectSize are equal");
+//        }
     }
 
-    /**
-     * Вычисляем размер объекта с помощью пакта {@link ObjectSizeCalculator}
-     * и метода {@link ObjectSizeCalculator#getObjectSize(Object)}.
-     * @param object объект размер которого необходимо выислить.
-     * @return размер объекта в байтах.
-     */
-    private static long watchSizeMemoryObject(Object object)  {
-        if (Objects.isNull(object)) {
-            return -1;
-        }
-        return ObjectSizeCalculator.getObjectSize(object);
-    }
+//    /**
+//     * Вычисляем размер объекта с помощью пакта {@link ObjectSizeCalculator}
+//     * и метода {@link ObjectSizeCalculator#getObjectSize(Object)}.
+//     * @param object объект размер которого необходимо выислить.
+//     * @return размер объекта в байтах.
+//     */
+//    private static long watchSizeMemoryObject(Object object)  {
+//        if (Objects.isNull(object)) {
+//            return -1;
+//        }
+//        return ObjectSizeCalculator.getObjectSize(object);
+//    }
 
     /**
      * Вычисляем размер объекта с помощью замера объема памяти занятого приложением, с заполнением
