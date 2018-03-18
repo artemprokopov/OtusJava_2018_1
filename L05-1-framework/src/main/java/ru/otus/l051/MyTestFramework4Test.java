@@ -1,6 +1,6 @@
 package ru.otus.l051;
 
-import ru.otus.l051.annotation.MyBefore;
+
 import ru.otus.l051.annotation.MyTest;
 
 /**

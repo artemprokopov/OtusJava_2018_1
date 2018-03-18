@@ -62,7 +62,7 @@ public class MyTestFrameWork {
      * @param clazz класс в котором производится поиск.
      */
     private static void  runTest(Class<?> clazz) {
-        Object object= ReflectionHelper.instantiate(clazz, null);
+        Object object = ReflectionHelper.instantiate(clazz, null);
         HashMap<Class<?>, List<Method>> annotationMethods = ReflectionHelper
                 .getAnotatedMethod(ReflectionHelper.getMethod(object),
                 MyTest.class, MyBefore.class, MyAfter.class);
@@ -98,6 +98,7 @@ public class MyTestFrameWork {
      * Вынос повторяющегося кода.
      * @param object объект у которого вызываются методы
      * @param methodList лист методов.
+     * @return возвращает true в случае успеха, в случае исключения возвращает false;
      */
     private static boolean runTestMethod(Object object, List<Method> methodList) {
         for (Method method : methodList) {

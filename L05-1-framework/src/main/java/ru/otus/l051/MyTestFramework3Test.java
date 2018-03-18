@@ -12,6 +12,8 @@ import ru.otus.l051.annotation.MyTest;
 public class MyTestFramework3Test {
     /**
      * Метод выполняющияся до запуска каждого тестового метода.
+     * @throws Exception Бросаем исключение для проверки прерывания выполнения тестов в случае падени
+     * предварительный методов аннотированных @MyBefore
      */
     @MyBefore
     public void testMyBefore1() throws Exception {
