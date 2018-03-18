@@ -114,13 +114,13 @@ class ReflectionHelper {
 
     /**
      * Получение всех методов объекта.
-     * @param object объект методы которого хоти получить.
+     * @param o объект методы которого хоти получить.
      * @return List методов.
      */
-    static List<Method> getMethod(Object object) {
+    static List<Method> getMethod(Object o) {
         Method[] methods = null;
         try {
-            methods = object.getClass().getMethods();
+            methods = o.getClass().getMethods();
         } catch (SecurityException se) {
             se.printStackTrace();
         }

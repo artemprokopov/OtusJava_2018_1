@@ -1,4 +1,9 @@
 package ru.otus.l051;
+
+import ru.otus.l051.annotation.MyAfter;
+import ru.otus.l051.annotation.MyBefore;
+import ru.otus.l051.annotation.MyTest;
+
 /**
  * Класс для проверки работы простого тестового фрейворка.
  * @author Artem Prokopov

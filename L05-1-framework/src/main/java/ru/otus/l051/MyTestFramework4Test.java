@@ -1,5 +1,6 @@
 package ru.otus.l051;
 
+import ru.otus.l051.annotation.MyBefore;
 import ru.otus.l051.annotation.MyTest;
 
 /**
@@ -8,13 +9,14 @@ import ru.otus.l051.annotation.MyTest;
  * @since 15/03/2018
  * @version 1.0
  */
-public class MyTestFramework2Test {
+public class MyTestFramework4Test {
+
     /**
      * Метод теста.
      */
     @MyTest
     public void testMyTest1() {
-        System.out.println("MyTestFramework2Test");
+        System.out.println("MyTestFramework4Test");
         System.out.println("Launch MyTest method 1");
     }
     /**
@@ -22,7 +24,7 @@ public class MyTestFramework2Test {
      */
     @MyTest
     public void testMyTest2() {
-        System.out.println("MyTestFramework2Test");
+        System.out.println("MyTestFramework4Test");
         System.out.println("Launch MyTest method 2");
     }
     /**
@@ -30,7 +32,7 @@ public class MyTestFramework2Test {
      */
     @MyTest
     public void testMyTest3() {
-        System.out.println("MyTestFramework2Test");
+        System.out.println("MyTestFramework4Test");
         System.out.println("Launch MyTest method 3");
     }
 

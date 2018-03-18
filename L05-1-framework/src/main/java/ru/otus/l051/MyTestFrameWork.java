@@ -1,6 +1,10 @@
 package ru.otus.l051;
 
 
+import ru.otus.l051.annotation.MyAfter;
+import ru.otus.l051.annotation.MyBefore;
+import ru.otus.l051.annotation.MyTest;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -58,8 +62,9 @@ public class MyTestFrameWork {
      * @param clazz класс в котором производится поиск.
      */
     private static void  runTest(Class<?> clazz) {
-        Object object = ReflectionHelper.instantiate(clazz, null);
-        HashMap<Class<?>, List<Method>> annotationMethods = ReflectionHelper.getAnotatedMethod(ReflectionHelper.getMethod(object),
+        Object object= ReflectionHelper.instantiate(clazz, null);
+        HashMap<Class<?>, List<Method>> annotationMethods = ReflectionHelper
+                .getAnotatedMethod(ReflectionHelper.getMethod(object),
                 MyTest.class, MyBefore.class, MyAfter.class);
         List<Method> listBefore = annotationMethods.get(MyBefore.class);
         if (listBefore == null) {
@@ -70,11 +75,14 @@ public class MyTestFrameWork {
             listAfter = new ArrayList<>();
         }
         List<Method> listTest = annotationMethods.get(MyTest.class);
-        if (listAfter == null) {
+        if (listTest == null) {
             listAfter = new ArrayList<>();
         }
-        for (Method method : annotationMethods.get(MyTest.class)) {
-            runTestMethod(object, listBefore);
+        for (Method method : listTest) {
+            object = ReflectionHelper.instantiate(clazz, null);
+            if (!runTestMethod(object, listBefore)) {
+                break;
+            }
             try {
                 method.invoke(object);
             } catch (IllegalAccessException e) {
@@ -89,17 +97,17 @@ public class MyTestFrameWork {
     /**
      * Вынос повторяющегося кода.
      * @param object объект у которого вызываются методы
-     * @param listBefore лист методов.
+     * @param methodList лист методов.
      */
-    private static void runTestMethod(Object object, List<Method> listBefore) {
-        for (Method methodBefore : listBefore) {
+    private static boolean runTestMethod(Object object, List<Method> methodList) {
+        for (Method method : methodList) {
             try {
-                methodBefore.invoke(object);
-            } catch (IllegalAccessException e) {
+                method.invoke(object);
+            } catch (Exception e) {
                 e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
+                return false;
             }
         }
+        return true;
     }
 }
