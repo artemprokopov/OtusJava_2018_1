@@ -120,7 +120,7 @@ public class Main {
 
     /**
      * Запускаем сборщик мусора.
-     * @throws InterruptedException.
+     * @throws InterruptedException
      */
     private static void runGC() throws InterruptedException {
         System.gc();
