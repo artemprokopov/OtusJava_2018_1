@@ -1,6 +1,6 @@
 package atm;
 
-public enum MoneySovietRub {
+public enum NominalMoneySovietRub implements Money {
     R100(100),
     R50(50),
     R25(25),
@@ -11,11 +11,17 @@ public enum MoneySovietRub {
 
     private final int value;
 
-    private MoneySovietRub (int initValue) {
+    private NominalMoneySovietRub(int initValue) {
         this.value = initValue;
     }
 
+    @Override
     public int getValue() {
         return value;
+    }
+
+    @Override
+    public TypeofMoney getTypeOfMoney() {
+        return TypeofMoney.RUB;
     }
 }
