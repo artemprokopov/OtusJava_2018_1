@@ -5,7 +5,7 @@ import atm.exception.OperationAtmCanNotCompleteException;
 import java.util.EnumMap;
 import java.util.Objects;
 
-public enum StorageAtmRub implements Atm<NominalMoneySovietRub> {
+public enum StorageStorageAtmRub implements StorageAtm<NominalMoneySovietRub> {
     INSTANCE;
 
     private static final EnumMap<NominalMoneySovietRub, Integer> STORAGE_ATM

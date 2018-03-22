@@ -2,7 +2,7 @@ package atm;
 
 import atm.exception.OperationAtmCanNotCompleteException;
 
-public interface Atm<T extends Enum<T>> {
+public interface StorageAtm<T extends Enum<T> & Money> {
     void initSlotAtmStorage(T nominalBanknotes, Integer numberBanknotes)
             throws OperationAtmCanNotCompleteException;
     Integer getNumberBanknotesSlotAtmStorage(T nominalBanknotes);
