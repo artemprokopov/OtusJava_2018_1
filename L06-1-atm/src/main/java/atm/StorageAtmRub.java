@@ -5,19 +5,20 @@ import atm.exception.OperationAtmCanNotCompleteException;
 import java.util.EnumMap;
 import java.util.Objects;
 
-public enum StorageStorageAtmRub implements StorageAtm<NominalMoneySovietRub> {
+public enum StorageAtmRub implements StorageAtm<NominalMoneySovietRub> {
     INSTANCE;
 
     private static final EnumMap<NominalMoneySovietRub, Integer> STORAGE_ATM
             = new EnumMap<>(NominalMoneySovietRub.class);
     static {
-        for (NominalMoneySovietRub moneySovietRubsr: NominalMoneySovietRub.values()) {
-            STORAGE_ATM.put(moneySovietRubsr, 0);
+        for (NominalMoneySovietRub moneySovietRub: NominalMoneySovietRub.values()) {
+            STORAGE_ATM.put(moneySovietRub, 0);
         }
     }
 
     private static final TypeofMoney NOMINAL_BANKNOTES_OPERATION_ATM = TypeofMoney.RUB;
     private static final int MAX_PLACE_IN_SLOTE_ATM = 100;
+    private static final int MIN_PLACE_IN_SLOTE_ATM = 0;
 
     @Override
     public void initSlotAtmStorage(NominalMoneySovietRub nominalBanknotes, Integer numberBanknotes)
@@ -71,5 +72,15 @@ public enum StorageStorageAtmRub implements StorageAtm<NominalMoneySovietRub> {
             count = count +  STORAGE_ATM.get(msr) * msr.getValue();
         }
         return count;
+    }
+
+    @Override
+    public boolean slotIsEmpty(NominalMoneySovietRub nominalBanknotes) {
+        return STORAGE_ATM.get(nominalBanknotes) == MIN_PLACE_IN_SLOTE_ATM;
+    }
+
+    @Override
+    public  NominalMoneySovietRub[]  getNominalBanknotes() {
+       return NominalMoneySovietRub.values();
     }
 }

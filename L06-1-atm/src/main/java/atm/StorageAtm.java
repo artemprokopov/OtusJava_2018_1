@@ -12,5 +12,9 @@ public interface StorageAtm<T extends Enum<T> & Money> {
             throws OperationAtmCanNotCompleteException;
     TypeofMoney getTypeCurrencyBanknotesOperation();
 
+    boolean slotIsEmpty(T nominalBanknotes);
+
     Integer remainMoneyInStorage();
+
+    T[] getNominalBanknotes();
 }
