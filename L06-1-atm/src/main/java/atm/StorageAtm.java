@@ -2,6 +2,8 @@ package atm;
 
 import atm.exception.OperationAtmCanNotCompleteException;
 
+import java.util.EnumMap;
+
 public interface StorageAtm<T extends Enum<T> & Money> {
     void initSlotAtmStorage(T nominalBanknotes, Integer numberBanknotes)
             throws OperationAtmCanNotCompleteException;
@@ -17,4 +19,8 @@ public interface StorageAtm<T extends Enum<T> & Money> {
     Integer remainMoneyInStorage();
 
     T[] getNominalBanknotes();
+
+    T[] getNotEmptySlot();
+
+    EnumMap<T, Integer> getConteynerResult();
 }
