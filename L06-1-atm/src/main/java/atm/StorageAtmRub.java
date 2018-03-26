@@ -2,7 +2,9 @@ package atm;
 
 import atm.exception.OperationAtmCanNotCompleteException;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Objects;
 
 public enum StorageAtmRub implements StorageAtm<NominalMoneySovietRub> {
@@ -82,5 +84,20 @@ public enum StorageAtmRub implements StorageAtm<NominalMoneySovietRub> {
     @Override
     public  NominalMoneySovietRub[]  getNominalBanknotes() {
        return NominalMoneySovietRub.values();
+    }
+
+    @Override
+    public NominalMoneySovietRub[] getNotEmptySlot() {
+        List<NominalMoneySovietRub> result = new ArrayList();
+        for (NominalMoneySovietRub nominalMoneySovietRub : NominalMoneySovietRub.values()) {
+            if (!this.slotIsEmpty(nominalMoneySovietRub)) {
+                result.add(nominalMoneySovietRub);
+            }
+        }
+        return result.toArray(new NominalMoneySovietRub[result.size()]);
+    }
+    @Override
+    public EnumMap<NominalMoneySovietRub, Integer> getConteynerResult() {
+        return new EnumMap<NominalMoneySovietRub, Integer>(NominalMoneySovietRub.class);
     }
 }
