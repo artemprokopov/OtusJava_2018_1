@@ -98,6 +98,6 @@ public enum StorageAtmRub implements StorageAtm<NominalMoneySovietRub> {
     }
     @Override
     public EnumMap<NominalMoneySovietRub, Integer> getConteynerResult() {
-        return new EnumMap<NominalMoneySovietRub, Integer>(NominalMoneySovietRub.class);
+        return new EnumMap<>(NominalMoneySovietRub.class);
     }
 }

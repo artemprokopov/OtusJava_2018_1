@@ -35,9 +35,6 @@ public class GreedyAlgoritmOfWithdrawal<T extends StorageAtm<R>, R extends  Enum
         if (temp != 0) {
             throw new NotEnoughMoney("Can not issue this amount!");
         }
-        for (R r : notEmtySlot) {
-            atm.decreaseNumberBanknotesSlotAtmStorage(r, result.get(r));
-        }
         return result;
     }
 }
