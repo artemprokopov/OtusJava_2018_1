@@ -5,5 +5,8 @@
         "http://checkstyle.sourceforge.net/dtds/suppressions_1_1.dtd">
 
 <suppressions>
-
+    <suppress
+            checks="RedundantModifier"
+            files="NominalMoneySovietRub.java"
+            lines="46"/>
 </suppressions>
