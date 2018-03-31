@@ -13,7 +13,7 @@ import java.util.Objects;
  * @param <R> тип перечесление оперируемых банкнот.
  * @version 1.0
  */
-public class GreedyAlgoritmOfWithdrawal<T extends StorageAtm<R>, R extends  Enum<R> & Money>
+public class GreedyAlgorithmOfWithdrawal<T extends StorageAtm<R>, R extends  Enum<R> & Money>
         implements AlgorithmOfWithdrawal<T, R> {
     /**
      * Метод запуска алгоритма расчета количесва банкнот которые должны быть выданы из хранилища банкомата.
@@ -36,14 +36,17 @@ public class GreedyAlgoritmOfWithdrawal<T extends StorageAtm<R>, R extends  Enum
         if (notEmptySlot.length == 0) {
             throw new NotEnoughMoneyException("Not enough money!");
         }
+        int numberBanknotesSlotAtmStorage;
         for (R r : notEmptySlot) {
-            Integer numberBanknotesSlotAtmStorage = atm.getNumberBanknotesSlotAtmStorage(r);
+            numberBanknotesSlotAtmStorage = atm.getNumberBanknotesSlotAtmStorage(r);
             int numberBanknotes = temp / r.getValue();
             if (numberBanknotesSlotAtmStorage < numberBanknotes) {
                 numberBanknotes = numberBanknotesSlotAtmStorage;
             }
-            result.put(r, numberBanknotes);
-            temp = temp - numberBanknotes * r.getValue();
+            if (numberBanknotes != 0) {
+                result.put(r, numberBanknotes);
+                temp = temp - numberBanknotes * r.getValue();
+            }
             if (temp == 0) {
                 break;
             }
