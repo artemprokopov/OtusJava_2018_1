@@ -1,4 +1,4 @@
-package atm.exception;
+package ru.otus.l061.atm.exception;
 /**
  * Исключение, выбрасываем когда отсутствуют купюры в слотах хранилища банкомата.
  * @author Artem Prokopov

@@ -1,4 +1,4 @@
-package atm.exception;
+package ru.otus.l061.atm.exception;
 /**
  * Исключение, выбрасываем когда операция банкомата не может быть завершена в штатном режиме.
  * @author Artem Prokopov

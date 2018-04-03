@@ -1,4 +1,4 @@
-package atm;
+package ru.otus.l061.atm;
 /**
  * Перечисление хранящее типы валют.
  * @author Artem Prokopov

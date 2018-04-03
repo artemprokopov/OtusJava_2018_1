@@ -9,7 +9,18 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>L06-1-ru.otus.l061.atm</artifactId>
+    <artifactId>L07-1-ru.otus.l061.atm-department</artifactId>
 
+    <properties>
+        <L06-1-ru.otus.l061.atm.version>1.0-SNAPSHOT</L06-1-ru.otus.l061.atm.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>ru.otus</groupId>
+            <artifactId>L06-1-ru.otus.l061.atm</artifactId>
+            <version>${L06-1-ru.otus.l061.atm.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>

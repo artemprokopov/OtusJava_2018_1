@@ -1,4 +1,4 @@
-package atm;
+package ru.otus.l061.atm;
 /**
  * Интерфейс определяющий тип денег.
  * @author Artem Prokopov

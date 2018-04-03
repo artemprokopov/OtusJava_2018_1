@@ -15,6 +15,7 @@
         <module>L04-1-gc</module>
         <module>L05-1-framework</module>
         <module>L06-1-atm</module>
+        <module>L07-1-atm-department</module>
     </modules>
     <name>OtusJava_2018_1</name>
     <description>The Course Java Developer of the Otus.</description>

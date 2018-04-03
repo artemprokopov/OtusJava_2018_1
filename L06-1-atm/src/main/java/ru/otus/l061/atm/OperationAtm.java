@@ -1,6 +1,6 @@
-package atm;
+package ru.otus.l061.atm;
 
-import atm.exception.OperationAtmCanNotCompleteException;
+import ru.otus.l061.atm.exception.OperationAtmCanNotCompleteException;
 
 import java.util.EnumMap;
 /**

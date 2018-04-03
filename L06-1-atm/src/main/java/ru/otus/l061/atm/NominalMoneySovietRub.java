@@ -1,4 +1,4 @@
-package atm;
+package ru.otus.l061.atm;
 /**
  * Перечисление купюр советскиих рублей.
  * @author Artem Prokopov

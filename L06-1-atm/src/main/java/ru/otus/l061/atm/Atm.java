@@ -1,7 +1,7 @@
-package atm;
+package ru.otus.l061.atm;
 
-import atm.exception.NotEnoughMoneyException;
-import atm.exception.OperationAtmCanNotCompleteException;
+import ru.otus.l061.atm.exception.NotEnoughMoneyException;
+import ru.otus.l061.atm.exception.OperationAtmCanNotCompleteException;
 
 import java.util.EnumMap;
 import java.util.Objects;
