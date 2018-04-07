@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC
+        "-//Puppy Crawl//DTD Suppressions 1.1//EN"
+        "http://checkstyle.sourceforge.net/dtds/suppressions_1_1.dtd">
+
+<suppressions>
+    <suppress files="TestJsonObject.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="TestJsonObject2.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="TestJsonObject3.java" checks="[a-zA-Z0-9]*"/>
+</suppressions>
