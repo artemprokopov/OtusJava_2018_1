@@ -271,5 +271,4 @@ public class MyJsonWriter implements IJsonWriter {
         }
         return arrayBuilder;
     }
-
 }

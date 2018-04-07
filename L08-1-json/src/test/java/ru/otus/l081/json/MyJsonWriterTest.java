@@ -29,7 +29,6 @@ public class MyJsonWriterTest {
         Reader reader = new BufferedReader(new FileReader(file.getPath() + "//"
                 + testJsonObject.getClass().getSimpleName() + ".json"));
         Gson gson = new Gson();
-        com.google.gson.stream.JsonReader jsonReader = gson.newJsonReader(reader);
         TestJsonObject testJsonObject1 = gson.fromJson(reader, TestJsonObject.class);
         assertEquals(testJsonObject1, testJsonObject);
     }
