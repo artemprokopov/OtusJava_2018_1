@@ -16,24 +16,28 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 /**
- *  .
+ * Класс серилизиции объекта в JSON.
+ * Используем библиотеку javax.json.
+ * @author Artem Prokopov
+ * @since 15/03/2018
+ * @version 1.0
  */
 public class MyJsonWriter implements IJsonWriter {
     /**
-     *  .
+     *  Поле сохраняет путь куда серелизуем объекты.
      */
     private final File dirPath;
 
     /**
-     *  .
+     *  Конструктор, по умолчанию задаем текущуюпапку.
      */
     public MyJsonWriter() {
         this.dirPath = new File(".//");
     }
 
     /**
-     *  .
-     * @param initDirPath .
+     *  Конструктор с параметром, можем задать путь для лериктории для хранения серилизованных объектов.
+     * @param initDirPath путь к дериктории хранения серилизованных объектов в JSON объектов.
      */
     public MyJsonWriter(File initDirPath) {
         if (initDirPath.isDirectory()) {
@@ -42,7 +46,10 @@ public class MyJsonWriter implements IJsonWriter {
             throw new IllegalArgumentException("It is not a directory!!!");
         }
     }
-
+    /**
+     * Метод серилизует переданный объек в JSON.
+     * @param writeObject серелизуемый объект.
+     */
     @Override
     public void write(Object writeObject) {
         Class clazz = writeObject.getClass();
@@ -51,19 +58,20 @@ public class MyJsonWriter implements IJsonWriter {
         JsonWriterFactory writerFactory = Json.createWriterFactory(null);
         try (Writer writer = new BufferedWriter(new FileWriter(file))) {
             JsonWriter jsonWriter = writerFactory.createWriter(writer);
-            jsonWriter.write(addJson(clazz, writeObject).build());
+            jsonWriter.write(addJson(writeObject).build());
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
     }
 
     /**
-     *  .
-     * @param clazzWrite .
-     * @param writeObject .
+     * Создаем {@link JsonObjectBuilder} из переданного серелизуемого объекта.
+     * @param <T> тип объекта.
+     * @param writeObject серелизуемый объект.
      * @return .
      */
-    private JsonObjectBuilder addJson(Class<?> clazzWrite, Object writeObject) {
+    private <T> JsonObjectBuilder addJson(T  writeObject) {
+        Class clazzWrite = writeObject.getClass();
         JsonBuilderFactory factory = Json.createBuilderFactory(null);
         JsonObjectBuilder objectBuilder = factory.createObjectBuilder();
         Field[] field = clazzWrite.getDeclaredFields();
@@ -79,23 +87,28 @@ public class MyJsonWriter implements IJsonWriter {
                 objectBuilder.addNull(fieldInspect.getName());
                 continue;
             }
-            if (fieldInspect.getType().equals(int.class) || fieldInspect.getType().equals(Integer.class)) {
+            if (fieldInspect.getType().equals(int.class)
+                    || fieldInspect.getType().equals(Integer.class)) {
                 objectBuilder.add(fieldInspect.getName(), (int) fieldObject);
                 continue;
             }
-            if (fieldInspect.getType().equals(long.class) || fieldInspect.getType().equals(Long.class)) {
+            if (fieldInspect.getType().equals(long.class)
+                    || fieldInspect.getType().equals(Long.class)) {
                 objectBuilder.add(fieldInspect.getName(), (long) fieldObject);
                 continue;
             }
-            if (fieldInspect.getType().equals(double.class) || fieldInspect.getType().equals(Double.class)) {
+            if (fieldInspect.getType().equals(double.class)
+                    || fieldInspect.getType().equals(Double.class)) {
                 objectBuilder.add(fieldInspect.getName(), (double) fieldObject);
                 continue;
             }
-            if (fieldInspect.getType().equals(float.class) || fieldInspect.getType().equals(Float.class)) {
+            if (fieldInspect.getType().equals(float.class)
+                    || fieldInspect.getType().equals(Float.class)) {
                 objectBuilder.add(fieldInspect.getName(), (float) fieldObject);
                 continue;
             }
-            if (fieldInspect.getType().equals(boolean.class) || fieldInspect.getType().equals(Boolean.class)) {
+            if (fieldInspect.getType().equals(boolean.class)
+                    || fieldInspect.getType().equals(Boolean.class)) {
                 objectBuilder.add(fieldInspect.getName(), (boolean) fieldObject);
                 continue;
             }
@@ -124,15 +137,18 @@ public class MyJsonWriter implements IJsonWriter {
                 objectBuilder.add(fieldInspect.getName(), addObjectArrayBuilder((Object[]) fieldObject));
                 continue;
             }
-            objectBuilder.add(fieldInspect.getName(), addJson(fieldObject.getClass(), fieldObject));
+            objectBuilder.add(fieldInspect.getName(), addJson(fieldObject));
         }
         return objectBuilder;
     }
 
     /**
-     *  .
-     * @param addArray .
-     * @return .
+     * Метод добавляет элементы массива объекты, элементы массива не примитивного типа
+     * и не объекты обертки {@link Integer}, {@link Long}, {@link Float}, {@link Double},
+     * {@link Boolean}б в {@link JsonArrayBuilder}.
+     * и возвращает его.
+     * @param addArray массив элементы котрого добавляем в {@link JsonArrayBuilder}.
+     * @return {@link JsonArrayBuilder} заполненый.
      */
     private JsonArrayBuilder addObjectArrayBuilder(Object[] addArray) {
         JsonBuilderFactory factory = Json.createBuilderFactory(null);
@@ -173,15 +189,18 @@ public class MyJsonWriter implements IJsonWriter {
                 arrayBuilder.addNull();
                 continue;
             }
-            arrayBuilder.add(addJson(o.getClass(), o));
+            arrayBuilder.add(addJson(o));
         }
         return arrayBuilder;
     }
 
     /**
-     *  .
-     * @param addArray .
-     * @return .
+     * Метод добавляет элементы массива если они примитивного типа, или объекты обертки
+     * {@link Integer}, {@link Long}, {@link Float}, {@link Double},
+     * {@link Boolean} в {@link JsonArrayBuilder}.
+     * и возвращает его.
+     * @param addArray массив элементы котрого добавляем в {@link JsonArrayBuilder}.
+     * @return {@link JsonArrayBuilder} заполненый.
      */
     private JsonArrayBuilder addPrimitiveArray(Object addArray) {
         JsonBuilderFactory factory = Json.createBuilderFactory(null);
