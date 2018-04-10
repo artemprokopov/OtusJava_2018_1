@@ -22,15 +22,15 @@ class StorageAtmRubNotSingltonForTest implements StorageAtm<NominalMoneySovietRu
     /**
      * Хранилище.
      */
-    private static final EnumMap<NominalMoneySovietRub, Integer> STORAGE_ATM
+    private  final EnumMap<NominalMoneySovietRub, Integer> storageAtm
             = new EnumMap<>(NominalMoneySovietRub.class);
 
     /**
      * Заполняем хранилище нулевыми значениями.
      */
-    static {
+    {
         for (NominalMoneySovietRub moneySovietRub: NominalMoneySovietRub.values()) {
-            STORAGE_ATM.put(moneySovietRub, 0);
+            storageAtm.put(moneySovietRub, 0);
         }
     }
 
@@ -70,7 +70,7 @@ class StorageAtmRubNotSingltonForTest implements StorageAtm<NominalMoneySovietRu
         if (numberBanknotes < 1) {
             throw new OperationAtmCanNotCompleteException("ATM can not add 0 and less banknotes in slot storage!");
         }
-        STORAGE_ATM.put(nominalBanknotes, numberBanknotes);
+        storageAtm.put(nominalBanknotes, numberBanknotes);
     }
     /**
      * Метод возвращающий количество банкнот в слоте хранилища.
@@ -80,7 +80,7 @@ class StorageAtmRubNotSingltonForTest implements StorageAtm<NominalMoneySovietRu
     @Override
     public Integer getNumberBanknotesSlotAtmStorage(NominalMoneySovietRub nominalBanknotes) {
         Objects.requireNonNull(nominalBanknotes);
-        return STORAGE_ATM.get(nominalBanknotes);
+        return storageAtm.get(nominalBanknotes);
     }
     /**
      * Уменьшает количесвто банкнот в слоте хранилища.
@@ -94,11 +94,11 @@ class StorageAtmRubNotSingltonForTest implements StorageAtm<NominalMoneySovietRu
             throws OperationAtmCanNotCompleteException {
         Objects.requireNonNull(nominalBanknotes);
         Objects.requireNonNull(decreaseNumberBanknotes);
-        if (STORAGE_ATM.get(nominalBanknotes).compareTo(decreaseNumberBanknotes) < 0) {
+        if (storageAtm.get(nominalBanknotes).compareTo(decreaseNumberBanknotes) < 0) {
             throw new OperationAtmCanNotCompleteException("Operation decrease banknotes in ATM storage can not complete!"
                             + "Not enough banknotes in slot" + nominalBanknotes + " ATM storage.");
         }
-        STORAGE_ATM.put(nominalBanknotes, (STORAGE_ATM.get(nominalBanknotes) - decreaseNumberBanknotes));
+        storageAtm.put(nominalBanknotes, (storageAtm.get(nominalBanknotes) - decreaseNumberBanknotes));
     }
     /**
      * Увеличивает количесвто банкнот в слоте хранилища.
@@ -111,11 +111,11 @@ class StorageAtmRubNotSingltonForTest implements StorageAtm<NominalMoneySovietRu
             throws OperationAtmCanNotCompleteException {
         Objects.requireNonNull(nominalBanknotes);
         Objects.requireNonNull(increaseNumberBanknotes);
-        if (STORAGE_ATM.get(nominalBanknotes) + increaseNumberBanknotes > MAX_PLACE_IN_SLOTE_ATM) {
+        if (storageAtm.get(nominalBanknotes) + increaseNumberBanknotes > MAX_PLACE_IN_SLOTE_ATM) {
             throw new OperationAtmCanNotCompleteException("Operation decrease banknotes in ATM storage can not complete!"
                             + "Not enough banknotes in slot" + nominalBanknotes + " ATM storage.");
         }
-        STORAGE_ATM.put(nominalBanknotes, (STORAGE_ATM.get(nominalBanknotes) - increaseNumberBanknotes));
+        storageAtm.put(nominalBanknotes, (storageAtm.get(nominalBanknotes) - increaseNumberBanknotes));
     }
     /**
      * Возвращает тип банкнот которыми оперирует хранилище.
@@ -133,7 +133,7 @@ class StorageAtmRubNotSingltonForTest implements StorageAtm<NominalMoneySovietRu
     public Integer restMoneyInStorage() {
         Integer count = 0;
         for (NominalMoneySovietRub msr: NominalMoneySovietRub.values()) {
-            count = count +  STORAGE_ATM.get(msr) * msr.getValue();
+            count = count +  storageAtm.get(msr) * msr.getValue();
         }
         return count;
     }
@@ -144,7 +144,7 @@ class StorageAtmRubNotSingltonForTest implements StorageAtm<NominalMoneySovietRu
      */
     @Override
     public boolean slotIsEmpty(NominalMoneySovietRub nominalBanknotes) {
-        return STORAGE_ATM.get(nominalBanknotes) == MIN_PLACE_IN_SLOTE_ATM;
+        return storageAtm.get(nominalBanknotes) == MIN_PLACE_IN_SLOTE_ATM;
     }
     /**
      * Возвращает массив номиналов банкнот идентификаторов слотов хранилища которые не являются пустыми.

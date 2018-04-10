@@ -63,7 +63,7 @@ public class AtmDepartment<T extends Enum<T> & Money> implements OperationAtmDep
     @Override
     public boolean initDefault(EnumMap<T, Integer> initAtm) throws OperationAtmCanNotCompleteException {
         for (T t : initAtm.keySet()) {
-            storageAtm.initSlotAtmStorage(t, defaultAtm.get(t));
+            storageAtm.initSlotAtmStorage(t, initAtm.get(t));
         }
         return true;
     }
