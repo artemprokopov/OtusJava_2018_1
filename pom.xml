@@ -17,6 +17,7 @@
         <module>L06-1-atm</module>
         <module>L07-1-atm-department</module>
         <module>L08-1-json</module>
+        <module>L09-1-jdbc</module>
     </modules>
     <name>OtusJava_2018_1</name>
     <description>The Course Java Developer of the Otus.</description>
