@@ -1,10 +1,11 @@
 # используем язык java. Travis CI поддерживает другие языки тоже.
 language: java
 # используем режим обычного пользователя для сборки проекта.
-sudo: false
+sudo: true
 jdk: oraclejdk9
 # после выполнения сборки запустить скрипт, который будет собирать статистику по JaCoCo
 # Здесь используется сторонни сервис https://codecov.io/
+
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
@@ -15,3 +16,16 @@ notifications:
       - art1828@mail.ru
     on_success: always # default: change
     on_failure: always # default: always
+addons:
+  apt:
+    sources:
+      - mysql-5.7-trusty
+    packages:
+      - mysql-server
+      - mysql-client
+before_install:
+  - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('OtusJdbc$12345') where User='otus'; GRANT ALL PRIVILEGES ON *.* TO 'щегы'@'localhost' IDENTIFIED BY 'OtusJdbc$12345' WITH GRANT OPTION; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+  - sudo mysql_upgrade
+  - sudo service mysql restart
+  - mysql -u otus -p OtusJdbc$12345 -e "CREATE DATABASE IF NOT EXISTS otus;"
+  - mysql -u otus -p OtusJdbc$12345 -e "use otus; CREATE TABLE myORM(id bigint(20) NOT NULL, name varchar(255), age int(3))"
