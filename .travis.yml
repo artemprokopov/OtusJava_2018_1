@@ -19,11 +19,12 @@ notifications:
 addons:
   apt:
     sources:
-      - mysql-5.7-trusty
+      - mysql-5.7
     packages:
       - mysql-server
       - mysql-client
 before_install:
+  - sudo mysql_upgrade --force
   - sudo mysql -e "use mysql; CREATE USER 'otus'@'localhost' IDENTIFIED BY '12345';"
   - sudo mysql -e "CREATE DATABASE IF NOT EXISTS otus; GRANT ALL ON otus.* TO 'otus'@'localhost'; FLUSH PRIVILEGES;"
   - sudo mysql -e "use otus; CREATE TABLE myORM(id bigint(20) NOT NULL, name varchar(255), age int(3));"
