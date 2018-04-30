@@ -23,7 +23,7 @@ public class DataSetOperationTest {
     /**
      * Поле пароля к тестовой базе.
      */
-    private final String password = "OtusJdbc$12345";
+    private final String password = "12345";
     /**
      * Поле имени тестовой таблицы.
      */

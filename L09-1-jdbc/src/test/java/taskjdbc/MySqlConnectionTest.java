@@ -27,7 +27,7 @@ public class MySqlConnectionTest {
     /**
      * Поле пароля к тестовой базе.
      */
-    private final String password = "OtusJdbc$12345";
+    private final String password = "12345";
 
     /**
      * Тестируем методы класса {@link MySqlConnection#getConnection()} и {@link MySqlConnection#putConnection()}.
