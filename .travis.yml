@@ -42,8 +42,12 @@ before_install:
   - sudo mysql -e "use otus; CREATE TABLE myORM(id bigint(20) NOT NULL, name varchar(255), age int(3));"
   - mysql -u otus --password="12345" -e "SHOW COLUMNS FROM myORM FROM otus;"
   - sudo mysql -e "SET GLOBAL max_connections = 1500;"
+  - sudo mysql -e "SHOW VARIABLES LIKE '%ssl%';"
+  - sudo mysql -e "\s"
+  - sudo mysql_ssl_rsa_setup --uid=mysql
   - sudo service mysql status
   - sudo service mysql stop
   - sudo usermod -d /var/lib/mysql/ mysql
   - sudo service mysql start
+  - sudo mysql -e "SHOW VARIABLES LIKE '%ssl%';"
   - netstat -tln
