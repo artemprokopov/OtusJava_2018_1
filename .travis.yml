@@ -24,6 +24,6 @@ addons:
       - mysql-server
       - mysql-client
 before_install:
-  - sudo mysql  -e "use mysql; CREATE USER 'otus'@'localhost' IDENTIFIED BY '12345';
-  GRANT ALL ON otus.* TO 'otus'@'localhost'; FLUSH PRIVILEGES; CREATE DATABASE IF NOT EXISTS otus;
-  use otus; CREATE TABLE myORM(id bigint(20) NOT NULL, name varchar(255), age int(3));"
+  - sudo mysql  -e "use mysql; CREATE USER 'otus'@'localhost' IDENTIFIED BY '12345'; FLUSH PRIVILEGES;"
+  -sudo mysql -e "CREATE DATABASE IF NOT EXISTS otus; GRANT ALL ON otus.* TO 'otus'@'localhost'; FLUSH PRIVILEGES;"
+  -sudo mysql -e "use otus; CREATE TABLE myORM(id bigint(20) NOT NULL, name varchar(255), age int(3));"
