@@ -18,12 +18,14 @@ notifications:
     on_failure: always # default: always
 addons:
   apt:
-    sources:-trusty
+    sources:
+      - mysql-5.7-trusty
     packages:
       - mysql-server
       - mysql-client
 before_install:
   - sudo mysql_upgrade --force -uroot -p
+  - sudo restart service mysqld
   - sudo mysql -e "use mysql; CREATE USER 'otus'@'localhost' IDENTIFIED BY '12345';"
   - sudo mysql -e "CREATE DATABASE IF NOT EXISTS otus; GRANT ALL ON otus.* TO 'otus'@'localhost'; FLUSH PRIVILEGES;"
   - sudo mysql -e "use otus; CREATE TABLE myORM(id bigint(20) NOT NULL, name varchar(255), age int(3));"
