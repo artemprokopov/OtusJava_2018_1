@@ -23,6 +23,7 @@ addons:
     packages:
       - mysql-server
       - mysql-client
+      - net-tools
 before_install:
   - sudo mysql_upgrade --force
   - sudo mysql -e "use mysql; CREATE USER 'otus'@'localhost' IDENTIFIED BY '12345';"
@@ -30,4 +31,5 @@ before_install:
   - sudo mysql -e "CREATE DATABASE IF NOT EXISTS otus; GRANT ALL ON * . * TO 'otus'@'localhost'; FLUSH PRIVILEGES;"
   - sudo mysql -e "SHOW DATABASES;"
   - sudo mysql -e "use otus; CREATE TABLE myORM(id bigint(20) NOT NULL, name varchar(255), age int(3));"
-  - mysql -u otus -p "12345" -e "SHOW COLUMNS FROM myORM FROM otus;"
+  - mysql -u otus --password="12345" -e "SHOW COLUMNS FROM myORM FROM otus;"
+  - netstat -tln
