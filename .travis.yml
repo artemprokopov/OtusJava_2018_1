@@ -1,6 +1,7 @@
 # используем язык java. Travis CI поддерживает другие языки тоже.
 language: java
 # используем режим обычного пользователя для сборки проекта.
+dist: trusty
 sudo: true
 jdk: oraclejdk9
 # после выполнения сборки запустить скрипт, который будет собирать статистику по JaCoCo
@@ -32,4 +33,6 @@ before_install:
   - sudo mysql -e "SHOW DATABASES;"
   - sudo mysql -e "use otus; CREATE TABLE myORM(id bigint(20) NOT NULL, name varchar(255), age int(3));"
   - mysql -u otus --password="12345" -e "SHOW COLUMNS FROM myORM FROM otus;"
+  - sudo /etc/init.d/mysql stop
+  - sudo /etc/init.d/mysql start
   - netstat -tln
