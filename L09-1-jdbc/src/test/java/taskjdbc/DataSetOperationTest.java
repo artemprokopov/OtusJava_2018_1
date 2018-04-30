@@ -13,7 +13,7 @@ public class DataSetOperationTest {
     /**
      * Поле URL к базе.
      */
-    private final String mySqlUrl = "jdbc:mysql://localhost:3306/otus"
+    private final String mySqlUrl = "jdbc:mysql://127.0.0.1:3306/otus"
             + "?useUnicode=true&useJDBCCompliantTimezoneShift=true"
             + "&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=true"
             + "&autoReconnect=true&failOverReadOnly=false&maxReconnects=10";
