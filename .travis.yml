@@ -24,7 +24,7 @@ addons:
       - mysql-server
       - mysql-client
 before_install:
-  - sudo mysql  -e "CREATE USER 'otus'@'localhost' IDENTIFIED BY 'OtusJdbc$12345';"
-  - sudo mysql -e "GRANT ALL ON * TO 'otus'@'localhost';"
-  - mysql -u otus -p OtusJdbc$12345 -e "CREATE DATABASE IF NOT EXISTS otus;"
-  - mysql -u otus -p OtusJdbc$12345 -e "use otus; CREATE TABLE myORM(id bigint(20) NOT NULL, name varchar(255), age int(3));"
+  - sudo mysql  -e "CREATE USER 'otus'@'localhost' IDENTIFIED BY '12345';"
+  - sudo mysql -e "CREATE DATABASE IF NOT EXISTS otus;"
+  - sudo mysql -e "GRANT ALL ON otus.* TO 'otus'@'localhost';"
+  - sudo mysql -e "use otus; CREATE TABLE myORM(id bigint(20) NOT NULL, name varchar(255), age int(3));"
