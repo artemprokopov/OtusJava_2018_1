@@ -19,7 +19,7 @@ public class MySqlConnectionTest {
      */
     private final String mySqlUrl = "jdbc:mysql://localhost:3306/otus"
             + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false"
-            + "&serverTimezone=UTC&useSSL=true&autoReconnect=true&failOverReadOnly=false&maxReconnects=10";
+            + "&serverTimezone=UTC&failOverReadOnly=false&maxReconnects=10";
     /**
      * Поле имени пользователя к тестовой базе.
      */

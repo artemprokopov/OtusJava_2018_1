@@ -15,7 +15,7 @@ public class DataSetOperationTest {
      */
     private final String mySqlUrl = "jdbc:mysql://localhost:3306/otus"
             + "?useUnicode=true&useJDBCCompliantTimezoneShift=true"
-            + "&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=true"
+            + "&useLegacyDatetimeCode=false&serverTimezone=UTC"
             + "&autoReconnect=true&failOverReadOnly=false&maxReconnects=10";
     /**
      * Поле имени пользователя к тестовой базе.
