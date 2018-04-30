@@ -4,6 +4,13 @@ language: java
 dist: trusty
 sudo: true
 jdk: oraclejdk9
+env:
+  - DB=mysql
+mysql: &mysql
+  adapter: mysql2
+  username: otus
+  password: 12345
+  database: otus
 # после выполнения сборки запустить скрипт, который будет собирать статистику по JaCoCo
 # Здесь используется сторонни сервис https://codecov.io/
 
