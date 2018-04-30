@@ -26,5 +26,8 @@ addons:
 before_install:
   - sudo mysql_upgrade --force
   - sudo mysql -e "use mysql; CREATE USER 'otus'@'localhost' IDENTIFIED BY '12345';"
+  - sudo mysql -e "SELECT User,Host FROM mysql.user;"
   - sudo mysql -e "CREATE DATABASE IF NOT EXISTS otus; GRANT ALL ON * . * TO 'otus'@'localhost'; FLUSH PRIVILEGES;"
+  - sudo mysql -e "SHOW DATABASES;"
   - sudo mysql -e "use otus; CREATE TABLE myORM(id bigint(20) NOT NULL, name varchar(255), age int(3));"
+  - sudo mysql -e "SHOW COLUMNS FROM myORM FROM otus;"
