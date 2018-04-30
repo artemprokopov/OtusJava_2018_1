@@ -24,7 +24,7 @@ addons:
       - mysql-server
       - mysql-client
 before_install:
-  - sudo mysql_upgrade --force -uroot -p
+  - sudo mysql_upgrade --force
   - sudo restart service mysqld
   - sudo mysql -e "use mysql; CREATE USER 'otus'@'localhost' IDENTIFIED BY '12345';"
   - sudo mysql -e "CREATE DATABASE IF NOT EXISTS otus; GRANT ALL ON otus.* TO 'otus'@'localhost'; FLUSH PRIVILEGES;"
