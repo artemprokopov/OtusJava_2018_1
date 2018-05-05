@@ -8,7 +8,7 @@ package ru.otus.l081.json;
  */
 public interface IJsonWriter {
     /**
-     * Метод серилизует переданный объек в JSON.
+     * Метод серелизует переданный объект в JSON.
      * @param writeObject серелизуемый объект.
      */
     void write(Object writeObject);

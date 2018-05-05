@@ -3,7 +3,7 @@ package taskjdbc;
 import javax.naming.OperationNotSupportedException;
 
 /**
- * Интрефейс комнд выполняющих операции по манипуляции над объектами.
+ * Интерфейс команд выполняющих операции по манипуляции над объектами.
  * @author Artem Prokopov
  * @since 20/04/2018
  * @version 1.0
@@ -24,7 +24,7 @@ public interface Command<T extends DataSet> {
      * и типа определяемого классом наследником от типа {@literal <T>}.
      * @param id уникальный идентификационный номер объекта.
      * @param clazz класс генерируемого объекта, параметризируемого типом {@literal <T>}.
-     * @return объект типа {@literal <T>} наследник абстрактого класса {@link DataSet}.
+     * @return объект типа {@literal <T>} наследник абстрактного класса {@link DataSet}.
      * @throws OperationNotSupportedException выбрасывается если метод не пределен в классе реализующим данный интерфейс.
      */
     default T execute(long id, Class<T> clazz) throws OperationNotSupportedException {

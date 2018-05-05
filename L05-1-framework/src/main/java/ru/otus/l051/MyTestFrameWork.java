@@ -62,9 +62,9 @@ public class MyTestFrameWork {
      * @param clazz класс в котором производится поиск.
      */
     private static void  runTest(Class<?> clazz) {
-        Object object = ReflectionHelper.instantiate(clazz, null);
+        Object object = ReflectionHelper.instantiate(clazz);
         HashMap<Class<?>, List<Method>> annotationMethods = ReflectionHelper
-                .getAnotatedMethod(ReflectionHelper.getMethod(object),
+                .getAnnotatedMethod(ReflectionHelper.getMethod(object),
                 MyTest.class, MyBefore.class, MyAfter.class);
         List<Method> listBefore = annotationMethods.get(MyBefore.class);
         if (listBefore == null) {
@@ -79,7 +79,7 @@ public class MyTestFrameWork {
             listAfter = new ArrayList<>();
         }
         for (Method method : listTest) {
-            object = ReflectionHelper.instantiate(clazz, null);
+            object = ReflectionHelper.instantiate(clazz);
             if (!runTestMethod(object, listBefore)) {
                 break;
             }

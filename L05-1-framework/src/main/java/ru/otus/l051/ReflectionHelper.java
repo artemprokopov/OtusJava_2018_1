@@ -12,14 +12,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
 /**
  * Класс утилитный, для реализации методов рефлексии.
  * @author Chibrikov Vitaly, Artem Prokopov
  * @since 15/03/2018
  * @version 1.0
  */
-@SuppressWarnings("SameParameterValue")
 class ReflectionHelper {
     /**
      *Приватный конструктор с выбросом исключения, для того чтобы не дать создать экземпляр класса.
@@ -133,7 +131,7 @@ class ReflectionHelper {
      * @param annotationClass перечень аннотаций для поиска.
      * @return HashMap c ключем по типу аннотации, значение List методов аннотированных данной аннотацией.
      */
-    static HashMap<Class<?>, List<Method>> getAnotatedMethod(List<Method> methods, Class<?>... annotationClass) {
+    static HashMap<Class<?>, List<Method>> getAnnotatedMethod(List<Method> methods, Class<?>... annotationClass) {
         HashMap<Class<?>, List<Method>> annotationMethods = new HashMap<>();
         for (Method method : methods) {
             for (Class aClass : annotationClass) {

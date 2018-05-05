@@ -19,10 +19,6 @@ public class SaveDataSetToBaseCommand<T extends DataSet> implements Command<T> {
      */
     private final Connection connection;
     /**
-     * Таблица хранящая данные объекта.
-     */
-    private final String tableBase;
-    /**
      * Запрос на вставку данных в БД.
      */
     private final String insert;
@@ -35,7 +31,6 @@ public class SaveDataSetToBaseCommand<T extends DataSet> implements Command<T> {
         assert (connection != null);
         assert (connection != null);
         this.connection = connection;
-        this.tableBase = initTable;
         this.insert = String.format("INSERT INTO %s(id, name, age) VALUES (? , ?, ?)", initTable);
     }
 
@@ -86,6 +81,12 @@ public class SaveDataSetToBaseCommand<T extends DataSet> implements Command<T> {
             preparedStatement.executeUpdate();
         } catch (SQLException sqle) {
             sqle.printStackTrace();
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

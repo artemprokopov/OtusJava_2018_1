@@ -151,7 +151,7 @@ public enum StorageAtmRub  implements StorageAtm<NominalMoneySovietRub> {
      */
     @Override
     public NominalMoneySovietRub[] getNotEmptySlot() {
-        List<NominalMoneySovietRub> result = new ArrayList();
+        List<NominalMoneySovietRub> result = new ArrayList<NominalMoneySovietRub>();
         for (NominalMoneySovietRub nominalMoneySovietRub : NominalMoneySovietRub.values()) {
             if (!this.slotIsEmpty(nominalMoneySovietRub)) {
                 result.add(nominalMoneySovietRub);

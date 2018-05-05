@@ -7,6 +7,11 @@ package ru.otus.l061.atm.exception;
  */
 public class NotEnoughMoneyException extends Exception {
     /**
+	 * Серийный номер.
+	 */
+	private static final long serialVersionUID = -2829340574254066034L;
+
+	/**
      * Конструктор.
      * @param message строка сообщения передаваемая в исключение.
      */

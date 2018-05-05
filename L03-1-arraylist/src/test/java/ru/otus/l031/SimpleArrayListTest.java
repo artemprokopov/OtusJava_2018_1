@@ -120,7 +120,7 @@ public class SimpleArrayListTest {
     @Test
     public void remove() {
         SimpleArrayList<Integer> testSimpleArrayListForremove = new SimpleArrayList<>(testArray);
-        testSimpleArrayListForremove.remove(new Integer(3));
+        testSimpleArrayListForremove.remove(Integer.valueOf(3));
         assertArrayEquals(testSimpleArrayListForremove.toArray(new Integer[testSimpleArrayListForremove.size()]),
                 resultArrayForremove);
     }
@@ -131,7 +131,7 @@ public class SimpleArrayListTest {
     @Test
     public void remove1() {
         SimpleArrayList<Integer> testSimpleArrayListForremove = new SimpleArrayList<>(testArray);
-        boolean result = testSimpleArrayListForremove.remove(new Integer(6));
+        boolean result = testSimpleArrayListForremove.remove(Integer.valueOf(6));
         assertFalse(result);
         assertArrayEquals(testSimpleArrayListForremove.toArray(new Integer[testSimpleArrayListForremove.size()]),
                 testArray);
@@ -143,7 +143,7 @@ public class SimpleArrayListTest {
     @Test
     public void remove2() {
         SimpleArrayList<Integer> testSimpleArrayListForremove = new SimpleArrayList<>(testArray);
-        testSimpleArrayListForremove.remove(new Integer(1));
+        testSimpleArrayListForremove.remove(Integer.valueOf(1));
         assertArrayEquals(testSimpleArrayListForremove.toArray(new Integer[testSimpleArrayListForremove.size()]),
                 resultArrayForremoveFirstElement);
     }
@@ -154,7 +154,7 @@ public class SimpleArrayListTest {
     @Test
     public void remove3() {
         SimpleArrayList<Integer> testSimpleArrayListForremove = new SimpleArrayList<>(testArray);
-        testSimpleArrayListForremove.remove(new Integer(5));
+        testSimpleArrayListForremove.remove(Integer.valueOf(5));
         assertArrayEquals(testSimpleArrayListForremove.toArray(new Integer[testSimpleArrayListForremove.size()]),
                 resultArrayForremoveLastElement);
     }
@@ -179,7 +179,7 @@ public class SimpleArrayListTest {
     public void get() {
         SimpleArrayList<Integer> testSimpleArrayListForGet = new SimpleArrayList<>(testArray);
         Integer result = testSimpleArrayListForGet.get(2);
-        assertEquals(result, new Integer(3));
+        assertEquals(result, Integer.valueOf(3));
         assertArrayEquals(testSimpleArrayListForGet.toArray(new Integer[testSimpleArrayListForGet.size()]),
                 testArray);
     }

@@ -19,10 +19,7 @@ public class MySqlConnection implements MyConnection {
      * Логин.
      */
     private final String user;
-    /**
-     * Пароль доступа к базе данных.
-     */
-    private final String password;
+
     /**
      * Поле хранит соединени с базой данных.
      */
@@ -37,11 +34,11 @@ public class MySqlConnection implements MyConnection {
     public MySqlConnection(String initUrl, String initUser, String initPassword) {
         this.url = initUrl;
         this.user = initUser;
-        this.password = initPassword;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException cnfe) {
-            cnfe.printStackTrace();
+            this.connection = DriverManager.getConnection(this.url, this.user, initPassword);
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -51,13 +48,6 @@ public class MySqlConnection implements MyConnection {
      */
     @Override
     public Connection getConnection() {
-        if (connection == null) {
-            try {
-                this.connection = DriverManager.getConnection(this.url, this.user, this.password);
-            } catch (SQLException sqle) {
-                sqle.printStackTrace();
-            }
-        }
         return connection;
     }
 
@@ -65,7 +55,7 @@ public class MySqlConnection implements MyConnection {
      * Освобождает соединение к текущей базе данных.
      */
     @Override
-    public void putConnection() {
+    public void closeConnection() {
         try {
             if (connection != null && !connection.isClosed()) {
                 try {

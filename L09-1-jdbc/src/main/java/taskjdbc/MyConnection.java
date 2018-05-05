@@ -18,5 +18,5 @@ public interface MyConnection {
     /**
      * Освобождает соединение сбаззой данных типа {@link Connection}.
      */
-    void putConnection();
+    void closeConnection();
 }

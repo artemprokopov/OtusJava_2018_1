@@ -88,7 +88,6 @@ public class SimpleArrayList<E> extends AbstractList<E> implements List<E> {
      * @param indexAddItem индекс элемента вставки.
      * @param addItem      элемент вставки.
      */
-    @SuppressWarnings("unused")
     @Override
     public void add(int indexAddItem, E addItem) {
         checkIndex(indexAddItem);
@@ -130,7 +129,6 @@ public class SimpleArrayList<E> extends AbstractList<E> implements List<E> {
      * @param deleteItem Удаляемый элемент.
      * @return в случае успеха возвращает удалённый элемент, в противном случае если такого элемента нет null.
      */
-    @SuppressWarnings("unchecked")
     @Override
     public boolean remove(Object deleteItem) {
         boolean result = false;
@@ -200,14 +198,14 @@ public class SimpleArrayList<E> extends AbstractList<E> implements List<E> {
     /**
      * Метод возвращает все элементы контейнера как массив типа E.
      * @param resultArray массив определяющий тип возвращаемого массива.
-     * @param <E> Тип возвращаемого массива.
+     * @param <T> Тип возвращаемого массива.
      * @return массив содержащий все элементы контейнера.
      */
     @SuppressWarnings("unchecked")
     @Override
-    public <E> E[] toArray(E[] resultArray) {
+    public <T> T[] toArray(T[] resultArray) {
         if (resultArray.length < currentItem + 1) {
-            return (E[]) Arrays.copyOf(array, currentItem + 1, resultArray.getClass());
+            return (T[]) Arrays.copyOf(array, currentItem + 1, resultArray.getClass());
         }
         System.arraycopy(array, 0, resultArray, 0, currentItem + 1);
         if (resultArray.length > currentItem + 1) {

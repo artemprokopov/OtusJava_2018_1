@@ -7,6 +7,11 @@ package ru.otus.l061.atm.exception;
  */
 public class OperationAtmCanNotCompleteException extends Exception {
     /**
+	 * Серийный номер.
+	 */
+	private static final long serialVersionUID = 1271571046852406010L;
+
+	/**
      * Конструктор.
      * @param message сообщение передаваемое в исключение.
      */

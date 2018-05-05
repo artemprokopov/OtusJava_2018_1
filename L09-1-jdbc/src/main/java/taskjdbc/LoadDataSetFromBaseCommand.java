@@ -21,30 +21,25 @@ public class LoadDataSetFromBaseCommand<T extends DataSet> implements Command<T>
      */
     private final Connection connection;
     /**
-     * Таблица хранящая данные объекта.
-     */
-    private final String table;
-    /**
      * Запрос на выборку данных.
      */
     private final String select;
 
     /**
      * Конструктор.
-     * @param connection соединени сбазой данных типа {@link Connection}
+     * @param connection соединение с базой данных типа {@link Connection}
      * @param initTable имя таблицы в базе данных, где хранятся данный объекта.
      */
     public LoadDataSetFromBaseCommand(Connection connection, String initTable) {
         assert (connection != null);
         assert (initTable != null);
         this.connection = connection;
-        this.table = initTable;
         this.select = String.format("SELECT * FROM %s WHERE id=?", initTable);
     }
 
     /**
      * Метод запускает процесс загрузки объекта по его уникальному идентификационному номеру и типу класса.
-     * @param idUser уникальный идентификациионный номер объекта который требуется.
+     * @param idUser уникальный идентификационный номер объекта который требуется.
      * @param clazz класс генерируемого объекта, параметризируемого типом {@literal <T>}.
      * @return объект типа {@literal <T>} наследник {@link DataSet}.
      */
@@ -60,30 +55,35 @@ public class LoadDataSetFromBaseCommand<T extends DataSet> implements Command<T>
         }
         try (PreparedStatement  preparedStatement = connection.prepareStatement(select)) {
             preparedStatement.setLong(1, idUser);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-               long idQuery = resultSet.getLong("id");
-                assert (idUser == idQuery);
-                String nameQuery = resultSet.getString("name");
-                int ageQuery = resultSet.getInt("age");
-                Constructor clazzConstructor = null;
-                try {
-                   clazzConstructor = clazz.getConstructor(long.class, String.class, int.class);
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                }
-                if (clazzConstructor != null) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    long idQuery = resultSet.getLong("id");
+                    assert (idUser == idQuery);
+                    String nameQuery = resultSet.getString("name");
+                    int ageQuery = resultSet.getInt("age");
+                    Constructor<T> clazzConstructor = null;
                     try {
-                        result = (T) clazzConstructor.newInstance(idQuery, nameQuery, ageQuery);
-                    } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                        clazzConstructor = clazz.getConstructor(long.class, String.class, int.class);
+                    } catch (NoSuchMethodException e) {
                         e.printStackTrace();
+                    }
+                    if (clazzConstructor != null) {
+                        try {
+                            result = (T) clazzConstructor.newInstance(idQuery, nameQuery, ageQuery);
+                        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
-            connection.setAutoCommit(true);
-            resultSet.close();
         } catch (SQLException sqle) {
             sqle.printStackTrace();
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return result;
     }

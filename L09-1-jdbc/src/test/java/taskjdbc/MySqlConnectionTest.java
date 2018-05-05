@@ -30,7 +30,7 @@ public class MySqlConnectionTest {
     private final String password = "12345";
 
     /**
-     * Тестируем методы класса {@link MySqlConnection#getConnection()} и {@link MySqlConnection#putConnection()}.
+     * Тестируем методы класса {@link MySqlConnection#getConnection()} и {@link MySqlConnection#closeConnection()}.
      */
     @Test
     public void testGetAndPutConnection() {
@@ -46,7 +46,7 @@ public class MySqlConnectionTest {
         } catch (SQLException sqle) {
             sqle.printStackTrace();
         }
-        mySqlConnection.putConnection();
+        mySqlConnection.closeConnection();
         try {
             assertFalse(connection.isValid(1));
         } catch (SQLException sqle) {
