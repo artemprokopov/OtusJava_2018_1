@@ -23,12 +23,7 @@ public class AddressDataSet extends DataSet {
      */
     @Column(name = "address")
     private String address;
-    /**
-     * Отношение OneToOne.
-     */
-    @OneToOne
-    @JoinColumn(name = "userAddress")
-    private  UserDataSet mUserDataSet;
+
     /**
      * Конструктор, нужен Hibernate.
      */

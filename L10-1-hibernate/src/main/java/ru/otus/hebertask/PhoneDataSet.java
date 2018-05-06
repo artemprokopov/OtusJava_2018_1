@@ -2,10 +2,18 @@ package ru.otus.hebertask;
 
 
 
+import org.jetbrains.annotations.NotNull;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Objects;
+
 
 /**
  * Класс данных, хранит телефонный номер.
@@ -15,13 +23,19 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "phone")
-public class PhoneDataSet extends DataSet {
+public class PhoneDataSet extends DataSet implements Comparable<PhoneDataSet> {
     /**
      * Поле хранит телефонный номер.
      */
     @Column(name = "number")
     private String number;
-
+    /**
+     * Отношение ManyToOne.
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userDataSet_id", updatable = false, insertable = false)
+    @NotNull
+    private UserDataSet userPhones;
     /**
      * Конструктор потумолчанию, важно для Hibernate.
      */
@@ -59,5 +73,10 @@ public class PhoneDataSet extends DataSet {
     @Override
     public int hashCode() {
         return Objects.hash(number);
+    }
+
+    @Override
+    public int compareTo(PhoneDataSet o) {
+        return number.compareTo(o.number);
     }
 }

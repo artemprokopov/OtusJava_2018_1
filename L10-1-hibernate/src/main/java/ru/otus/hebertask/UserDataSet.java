@@ -2,17 +2,17 @@ package ru.otus.hebertask;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Класс данных, хранит данные пользователя.
@@ -36,14 +36,21 @@ public class UserDataSet extends DataSet {
     /**
      * Поле хранит адрес пользователя.
      */
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "mUserDataSet", fetch = FetchType.EAGER)
-    private AddressDataSet userAddress;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private AddressDataSet address;
     /**
      * Лист телефонов пользователя.
      */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @ElementCollection(targetClass = PhoneDataSet.class)
-    private List<PhoneDataSet> userPhones;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "userDataSet_id",
+            nullable = false
+    )
+    @OrderColumn(
+            name = "phone_position",
+            nullable = false
+    )
+    private Set<PhoneDataSet> phones;
 
     /**
      * Контсруктор, нужен Hibernate.
@@ -56,14 +63,14 @@ public class UserDataSet extends DataSet {
      * @param name имя пользователя.
      * @param age возраст пользователя.
      * @param address адрес пользователя.
-     * @param phones телефоны пользователя.
+     * @param userPhones телефоны пользователя.
      */
-    public UserDataSet(String name, int age, AddressDataSet address, PhoneDataSet... phones) {
+    public UserDataSet(String name, int age, AddressDataSet address, PhoneDataSet... userPhones) {
         this.setId(-1);
         this.name = name;
         this.age = age;
-        this.userAddress = address;
-        this.userPhones = Arrays.asList(phones);
+        this.address = address;
+        this.phones = new HashSet<>(Arrays.asList(userPhones));
     }
 
     /**
@@ -102,32 +109,32 @@ public class UserDataSet extends DataSet {
      * Геттер, возвращает адрес пользователя.
      * @return адрес пользователя.
      */
-    public AddressDataSet getUserAddress() {
-        return userAddress;
+    public AddressDataSet getAddress() {
+        return address;
     }
 
     /**
      * Сеттер, устанавливает адрес пользователя.
-     * @param userAddress адрес пользоваетля.
+     * @param address адрес пользоваетля.
      */
-    public void setUserAddress(AddressDataSet userAddress) {
-        this.userAddress = userAddress;
+    public void setAddress(AddressDataSet address) {
+        this.address = address;
     }
 
     /**
      * Геттер возвращает лист телефоноф пользователя.
      * @return {@literal List<{@link PhoneDataSet}>} телефонов пользовател.
      */
-    public List<PhoneDataSet> getUserPhones() {
-        return userPhones;
+    public Set<PhoneDataSet> getPhones() {
+        return phones;
     }
 
     /**
      * Сеттер, устанавливает телефоны пользоваетля.
-     * @param userPhones список телефонов пользователя телефонов пользовател.
+     * @param phones список телефонов пользователя телефонов пользовател.
      */
-    public void setUserPhones(PhoneDataSet... userPhones) {
-        this.userPhones = Arrays.asList(userPhones);
+    public void setPhones(PhoneDataSet... phones) {
+        this.phones = new HashSet<>(Arrays.asList(phones));
     }
 
     @Override
@@ -144,12 +151,12 @@ public class UserDataSet extends DataSet {
         UserDataSet that = (UserDataSet) o;
         return age == that.age
                 && Objects.equals(name, that.name)
-                && Objects.equals(userAddress, that.userAddress)
-                && Objects.equals(userPhones, that.userPhones);
+                && Objects.equals(address, that.address)
+                && Objects.equals(phones, that.phones);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, age, userAddress, userPhones);
+        return Objects.hash(super.hashCode(), name, age, address, phones);
     }
 }

@@ -1,6 +1,6 @@
 package ru.otus.hebertask.dbservice;
 
-import org.junit.Ignore;
+
 import org.junit.Test;
 
 import ru.otus.hebertask.AddressDataSet;
@@ -14,10 +14,9 @@ import static org.junit.Assert.assertEquals;
  * @since 05/05/2018
  * @version 1.0
  */
-@Ignore
 public class DBServiceImplHibernateTest {
     /**
-     * Поле сохраняемого и загружаемого тестового класса, типа {@link UserDataSet}
+     * Поле сохраняемого и загружаемого тестового класса, типа {@link UserDataSet}.
      */
     private UserDataSet userDataSet;
     {
@@ -35,7 +34,6 @@ public class DBServiceImplHibernateTest {
         DBServiceImplHibernate dbServiceImplHibernate = new DBServiceImplHibernate();
         dbServiceImplHibernate.save(userDataSet);
         UserDataSet result = dbServiceImplHibernate.read(1);
-        userDataSet.setId(result.getId());
         assertEquals(result, userDataSet);
     }
 
