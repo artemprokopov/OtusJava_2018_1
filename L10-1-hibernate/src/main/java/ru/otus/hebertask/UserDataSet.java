@@ -1,7 +1,18 @@
 package ru.otus.hebertask;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Класс данных, хранит данные пользователя.
@@ -9,23 +20,30 @@ import java.util.List;
  * @since 05/05/2018
  * @version 1.0
  */
+@Entity
+@Table(name = "user")
 public class UserDataSet extends DataSet {
     /**
      * Поле хранит имяользователя.
      */
+    @Column(name = "name")
     private String name;
     /**
      * Поле хранит возраст пользователя.
      */
+    @Column(name = "age")
     private int age;
     /**
      * Поле хранит адрес пользователя.
      */
-    private AddressDataSet address;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "mUserDataSet", fetch = FetchType.EAGER)
+    private AddressDataSet userAddress;
     /**
      * Лист телефонов пользователя.
      */
-    private List<PhoneDataSet> phones;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = PhoneDataSet.class)
+    private List<PhoneDataSet> userPhones;
 
     /**
      * Контсруктор, нужен Hibernate.
@@ -44,8 +62,8 @@ public class UserDataSet extends DataSet {
         this.setId(-1);
         this.name = name;
         this.age = age;
-        this.address = address;
-        this.phones = Arrays.asList(phones);
+        this.userAddress = address;
+        this.userPhones = Arrays.asList(phones);
     }
 
     /**
@@ -84,31 +102,54 @@ public class UserDataSet extends DataSet {
      * Геттер, возвращает адрес пользователя.
      * @return адрес пользователя.
      */
-    public AddressDataSet getAddress() {
-        return address;
+    public AddressDataSet getUserAddress() {
+        return userAddress;
     }
 
     /**
      * Сеттер, устанавливает адрес пользователя.
-     * @param address адрес пользоваетля.
+     * @param userAddress адрес пользоваетля.
      */
-    public void setAddress(AddressDataSet address) {
-        this.address = address;
+    public void setUserAddress(AddressDataSet userAddress) {
+        this.userAddress = userAddress;
     }
 
     /**
      * Геттер возвращает лист телефоноф пользователя.
      * @return {@literal List<{@link PhoneDataSet}>} телефонов пользовател.
      */
-    public List<PhoneDataSet> getPhones() {
-        return phones;
+    public List<PhoneDataSet> getUserPhones() {
+        return userPhones;
     }
 
     /**
      * Сеттер, устанавливает телефоны пользоваетля.
-     * @param phones список телефонов пользователя телефонов пользовател.
+     * @param userPhones список телефонов пользователя телефонов пользовател.
      */
-    public void setPhones(PhoneDataSet... phones) {
-        this.phones = Arrays.asList(phones);
+    public void setUserPhones(PhoneDataSet... userPhones) {
+        this.userPhones = Arrays.asList(userPhones);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        UserDataSet that = (UserDataSet) o;
+        return age == that.age
+                && Objects.equals(name, that.name)
+                && Objects.equals(userAddress, that.userAddress)
+                && Objects.equals(userPhones, that.userPhones);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), name, age, userAddress, userPhones);
     }
 }

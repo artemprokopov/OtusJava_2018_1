@@ -6,6 +6,7 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+import ru.otus.hebertask.AddressDataSet;
 import ru.otus.hebertask.EmtyDataSet;
 import ru.otus.hebertask.PhoneDataSet;
 import ru.otus.hebertask.UserDataSet;
@@ -34,11 +35,14 @@ public class DBServiceImplHibernate implements DBService {
 
         configuration.addAnnotatedClass(UserDataSet.class);
         configuration.addAnnotatedClass(PhoneDataSet.class);
+        configuration.addAnnotatedClass(AddressDataSet.class);
         configuration.addAnnotatedClass(EmtyDataSet.class);
 
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         configuration.setProperty("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver");
-        configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/otus");
+        configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/otus"
+                + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false"
+                + "&serverTimezone=UTC&failOverReadOnly=false&maxReconnects=10");
         configuration.setProperty("hibernate.connection.username", "otus");
         configuration.setProperty("hibernate.connection.password", "12345");
         configuration.setProperty("hibernate.show_sql", "true");
