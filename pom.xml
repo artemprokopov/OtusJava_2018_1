@@ -19,6 +19,7 @@
         <module>L08-1-json</module>
         <module>L09-1-jdbc</module>
         <module>L10-1-hibernate</module>
+        <module>L11-1-cache</module>
     </modules>
     <name>OtusJava_2018_1</name>
     <description>The Course Java Developer of the Otus.</description>
