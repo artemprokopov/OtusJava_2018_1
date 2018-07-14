@@ -18,7 +18,8 @@ public class StringTutor  {
 	 *  и начинаются с большой буквы
 	 */
 	public boolean checkGreeting(String greeting) {
-		String reg = "Привет,\\s*[А-Я][а-я]{2,}\\s+[А-Я][а-я]{2,}\\s*[!]";
+		//String reg = "Привет,\\s*[А-Я][а-я]{2,}\\s+[А-Я][а-я]{2,}\\s*[!]";
+		String reg = "Привет,\\s*[А-Я][а-я]{2,}\\s+[А-Я][а-я]{2,}([-][А-Я][а-я]{2,})?\\s*[!]";
 		return greeting.matches(reg);
 	}
 }
