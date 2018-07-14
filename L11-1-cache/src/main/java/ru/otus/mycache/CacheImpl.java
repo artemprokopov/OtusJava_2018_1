@@ -1,24 +1,25 @@
 package ru.otus.mycache;
 
+import java.lang.ref.SoftReference;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-public class CacheImpl implements ICache {
+public class CacheImpl<K, V> implements ICache<K, V> {
     private final int maxElements;
     private final long lifeTimeMs;
     private final long idleTimeMs;
     private final boolean isEternal;
 
-    private final Map<KeyCache, CacheElement> elements = new WeakHashMap<>();
+    private final Map<KeyCache<K>, SoftReference<CacheElement<K, V>>> elements = new WeakHashMap<>();
     @Override
-    public <K, V> void put(K key, V value) {
+    public void put(K key, V value) {
         CacheElement<K, V> cacheElement = new CacheElementImpl<>(key, value, idleTimeMs, lifeTimeMs);
-        elements.put(cacheElement.getKey(), cacheElement);
+        elements.put(cacheElement.getKey(), new SoftReference<>(cacheElement));
     }
 
     @Override
-    public <K, V> V get(K key) {
-        return (V) elements.get(key);
+    public  V get(K key) {
+        return  elements.get(key).get().getValue();
     }
 
     @Override

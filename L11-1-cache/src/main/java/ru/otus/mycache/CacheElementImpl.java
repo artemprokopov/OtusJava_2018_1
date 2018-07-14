@@ -1,6 +1,5 @@
 package ru.otus.mycache;
 
-import java.lang.ref.SoftReference;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -12,12 +11,12 @@ import java.util.TimerTask;
  * @since 14/07/2018
  * @version 1.0
  */
-public class CacheElementImpl<K , V> implements CacheElement<K, V> {
+public class CacheElementImpl<K, V> implements CacheElement<K, V> {
 
     /**
      * Софт ссылка на объет ключа.
      */
-    private SoftReference<KeyCache<K>> key;
+    private KeyCache<K> key;
     /**
      * Сохраняемое значени.
      */
@@ -54,13 +53,13 @@ public class CacheElementImpl<K , V> implements CacheElement<K, V> {
             }
             timer.schedule(getLifeTimerTask(), 0, initLifeTime);
         }
-        this.key = new SoftReference<>(new KeyCacheImpl<>(key));
+        this.key = new KeyCacheImpl<>(key);
         this.value = value;
     }
 
     @Override
     public KeyCache<K> getKey() {
-        return this.key.get();
+        return this.key;
     }
 
     @Override
