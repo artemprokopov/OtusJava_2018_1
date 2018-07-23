@@ -46,7 +46,11 @@ public class DBServiceImplHibernateCache implements DBService {
         if (result != null) {
             return result;
         }
-        return dbService.readByName(name);
+        UserDataSet resultReadByName = dbService.readByName(name);
+        if (resultReadByName != null) {
+            cacheName.put(resultReadByName.getName(), resultReadByName);
+        }
+        return resultReadByName;
     }
 
     @Override

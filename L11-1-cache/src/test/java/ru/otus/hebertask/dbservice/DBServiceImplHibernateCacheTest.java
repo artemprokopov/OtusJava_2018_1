@@ -58,8 +58,8 @@ public class DBServiceImplHibernateCacheTest {
      */
     @Test
     public void saveAndReadByIdCache() {
-        ICache<Long, UserDataSet> cacheId = new CacheImpl<>(2, 1000, 1000);
-        ICache<String, UserDataSet> cacheName = new CacheImpl<>(2, 1000, 1000);
+        ICache<Long, UserDataSet> cacheId = new CacheImpl<>(2, 100000, 100000);
+        ICache<String, UserDataSet> cacheName = new CacheImpl<>(2, 100000, 100000);
         DBService dbService = new DBServiceImplHibernateCache(dbServiceImplHibernate, cacheId, cacheName);
         dbService.save(userDataSet1);
         dbService.save(userDataSet2);
@@ -87,7 +87,6 @@ public class DBServiceImplHibernateCacheTest {
         dbService.save(userDataSet3);
         try {
             sleep(2000);
-            System.gc();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -106,8 +105,8 @@ public class DBServiceImplHibernateCacheTest {
      */
     @Test
     public void saveAndReadByNameCache() {
-        ICache<Long, UserDataSet> cacheId = new CacheImpl<>(4, 1000, 1000);
-        ICache<String, UserDataSet> cacheName = new CacheImpl<>(4, 1000, 1000);
+        ICache<Long, UserDataSet> cacheId = new CacheImpl<>(4, 10000, 10000);
+        ICache<String, UserDataSet> cacheName = new CacheImpl<>(4, 10000, 10000);
         DBService dbService = new DBServiceImplHibernateCache(dbServiceImplHibernate, cacheId, cacheName);
         dbService.save(userDataSet1);
         dbService.save(userDataSet2);

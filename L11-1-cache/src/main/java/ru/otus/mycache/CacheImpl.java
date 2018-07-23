@@ -1,6 +1,5 @@
 package ru.otus.mycache;
 
-import java.lang.ref.SoftReference;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -49,16 +48,16 @@ public class CacheImpl<K, V> implements ICache<K, V> {
     public  V get(K key) {
         KeyCache<K> keyCache = new KeyCacheImpl<>(key);
         CacheElement<K, V> tempElement = elements.get(keyCache);
-        if (tempElement != null) {
-            hitCount++;
-        } else {
+        if (tempElement == null) {
             missCount++;
             return null;
         }
          V resultCacheElement = tempElement.getValue();
         if (resultCacheElement == null) {
+            missCount++;
             return null;
         }
+        hitCount++;
         return  resultCacheElement;
     }
 
