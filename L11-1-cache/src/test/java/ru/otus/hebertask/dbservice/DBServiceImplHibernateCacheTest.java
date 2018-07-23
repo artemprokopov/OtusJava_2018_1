@@ -105,7 +105,7 @@ public class DBServiceImplHibernateCacheTest {
      * Работаем с кэшем.
      */
     @Test
-    public void saveAndReadByNameCacheTimerMore1000ms() {
+    public void saveAndReadByNameCache() {
         ICache<Long, UserDataSet> cacheId = new CacheImpl<>(4, 1000, 1000);
         ICache<String, UserDataSet> cacheName = new CacheImpl<>(4, 1000, 1000);
         DBService dbService = new DBServiceImplHibernateCache(dbServiceImplHibernate, cacheId, cacheName);
