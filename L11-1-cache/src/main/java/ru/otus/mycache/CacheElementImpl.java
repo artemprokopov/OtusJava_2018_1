@@ -53,6 +53,7 @@ public class CacheElementImpl<K, V> implements CacheElement<K, V> {
             }
             timer.schedule(getLifeTimerTask(), 0, initLifeTime);
         }
+
         this.key = new KeyCacheImpl<>(key);
         this.value = value;
     }
