@@ -10,6 +10,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>L11-1-cache</artifactId>
+    <properties>
+        <L10-1-hibernate.version>1.0-SNAPSHOT</L10-1-hibernate.version>
+    </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>ru.otus</groupId>
+            <artifactId>L10-1-hibernate</artifactId>
+            <version>${L10-1-hibernate.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>

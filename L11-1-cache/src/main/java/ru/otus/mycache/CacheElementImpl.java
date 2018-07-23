@@ -30,7 +30,7 @@ public class CacheElementImpl<K, V> implements CacheElement<K, V> {
      * Таймер запускающий проверки времени жизни элемента, и времени простоя, следующего
      * обращения к элементу.
      */
-    private Timer timer;
+    private final Timer timer = new Timer(true);;
 
 
     /**
@@ -42,15 +42,9 @@ public class CacheElementImpl<K, V> implements CacheElement<K, V> {
      */
     public CacheElementImpl(K key, V value, long initIdleTime, long initLifeTime) {
         if (initIdleTime > 0) {
-            if (timer != null) {
-                this.timer = new Timer(true);
-            }
             timer.schedule(getIdleTimerTask(), 0, initIdleTime);
         }
         if (initLifeTime > 0) {
-            if (timer != null) {
-                this.timer = new Timer(true);
-            }
             timer.schedule(getLifeTimerTask(), 0, initLifeTime);
         }
 

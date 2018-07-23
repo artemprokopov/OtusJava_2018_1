@@ -53,8 +53,13 @@ public class CacheImpl<K, V> implements ICache<K, V> {
             hitCount++;
         } else {
             missCount++;
+            return null;
         }
-        return  tempElement.get().getValue();
+        CacheElement<K, V> resultCacheElement = tempElement.get();
+        if (resultCacheElement == null) {
+            return null;
+        }
+        return  resultCacheElement.getValue();
     }
 
     @Override
