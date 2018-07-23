@@ -1,5 +1,6 @@
 package ru.otus.mycache;
 
+import java.lang.ref.SoftReference;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -20,7 +21,7 @@ public class CacheElementImpl<K, V> implements CacheElement<K, V> {
     /**
      * Сохраняемое значени.
      */
-    private final V value;
+    private final SoftReference<V> value;
     /**
      * Время жизни элемена между обращениями.
      */
@@ -49,7 +50,7 @@ public class CacheElementImpl<K, V> implements CacheElement<K, V> {
         }
 
         this.key = new KeyCacheImpl<>(key);
-        this.value = value;
+        this.value = new SoftReference<>(value);
     }
 
     @Override
@@ -60,15 +61,16 @@ public class CacheElementImpl<K, V> implements CacheElement<K, V> {
     @Override
     public V getValue() {
         this.notIdle = true;
-        return this.value;
+        return this.value.get();
     }
 
     /**
      * Метод обнуляет ключ.
      */
-    public void disposeKey() {
+    public void dispose() {
         timer.cancel();
         this.key = null;
+        this.value.clear();
     }
 
     /**
@@ -81,7 +83,7 @@ public class CacheElementImpl<K, V> implements CacheElement<K, V> {
             @Override
             public void run() {
                 if (!notIdle) {
-                    disposeKey();
+                    dispose();
                 }
             }
         };
@@ -95,7 +97,7 @@ public class CacheElementImpl<K, V> implements CacheElement<K, V> {
         return new TimerTask() {
             @Override
             public void run() {
-                disposeKey();
+                dispose();
             }
         };
     }
