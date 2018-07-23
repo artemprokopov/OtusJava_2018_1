@@ -70,7 +70,9 @@ public class CacheElementImpl<K, V> implements CacheElement<K, V> {
     public void dispose() {
         timer.cancel();
         this.key = null;
-        this.value.clear();
+        if (this.value != null) {
+            this.value.clear();
+        }
     }
 
     /**
