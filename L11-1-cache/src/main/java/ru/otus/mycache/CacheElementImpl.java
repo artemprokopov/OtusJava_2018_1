@@ -25,14 +25,19 @@ public class CacheElementImpl<K, V> implements CacheElement<K, V> {
     /**
      * Время жизни элемена между обращениями.
      */
-    private boolean notIdle = false;
+    private  boolean notIdle = false;
 
     /**
      * Таймер запускающий проверки времени жизни элемента, и времени простоя, следующего
      * обращения к элементу.
      */
-    private final Timer timer1 = new Timer(true);
-    private final Timer timer2 = new Timer(true);
+    private final Timer timerIdle = new Timer(true);
+    /**
+     * Таймер запускающий проверки времени жизни элемента.
+     */
+    private final Timer timerLife = new Timer(true);
+
+
 
     /**
      * Конструктор.
@@ -43,10 +48,10 @@ public class CacheElementImpl<K, V> implements CacheElement<K, V> {
      */
     public CacheElementImpl(K key, V value, long initIdleTime, long initLifeTime) {
         if (initIdleTime > 0) {
-            timer1.schedule(getIdleTimerTask(), initIdleTime, initIdleTime);
+            timerIdle.schedule(getIdleTimerTask(), initIdleTime, initIdleTime);
         }
         if (initLifeTime > 0) {
-            timer2.schedule(getLifeTimerTask(), initLifeTime, initLifeTime);
+            timerLife.schedule(getLifeTimerTask(), initLifeTime, initLifeTime);
         }
 
         this.key = new KeyCacheImpl<>(key);
@@ -67,21 +72,19 @@ public class CacheElementImpl<K, V> implements CacheElement<K, V> {
     /**
      * Метод обнуляет ключ.
      */
-    public void dispose() {
-        synchronized (this) {
-            timer1.cancel();
-            timer2.cancel();
-            this.key = null;
-            if (this.value != null) {
-                this.value.clear();
-            }
+    public synchronized void dispose() {
+        timerIdle.cancel();
+        timerLife.cancel();
+        this.key = null;
+        if (this.value != null) {
+            this.value.clear();
         }
     }
 
     /**
      * Задача для таймера отслеживающее время жизни элемента в зависимости от заданного максимального
      * времени между запросами элемента из кэша.
-     * @return задача для таймера {@link CacheElementImpl#timer1}
+     * @return задача для таймера {@link CacheElementImpl#timerIdle}
      */
     private TimerTask getIdleTimerTask() {
         return new TimerTask() {
@@ -90,13 +93,14 @@ public class CacheElementImpl<K, V> implements CacheElement<K, V> {
                 if (!notIdle) {
                     dispose();
                 }
+                notIdle = false;
             }
         };
     }
     /**
      * Задача для таймера отслеживающее время жизни элемента в зависимости от заданного максимального
      * времени между запросами элемента из кэша.
-     * @return задача для таймера {@link CacheElementImpl#timer2}
+     * @return задача для таймера {@link CacheElementImpl#timerLife}
      */
     private TimerTask getLifeTimerTask() {
         return new TimerTask() {
