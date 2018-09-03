@@ -22,6 +22,7 @@
         <module>L11-1-cache</module>
         <module>L02-2-array</module>
         <module>L02-3-string</module>
+        <module>L12-1-webserver</module>
     </modules>
     <name>OtusJava_2018_1</name>
     <description>The Course Java Developer of the Otus.</description>
